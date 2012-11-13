@@ -1,10 +1,10 @@
 PoetExchange
 ============
 
-Code for the Poet Exchange website
+All web applications associated with the PoetExchange.com website.
 
 --------------
-General Dev Guidelines
+GENERAL DEV GUIDELINES
 --------------
 These are some general guidelines which I thought would make our lives much easier when it comes to code collaboration. Feel free to add to the list if you think of more
 
@@ -30,6 +30,21 @@ We all hate to write Documentation. But we all need to do it.
 - The GitHub repository also provides a wiki section
 - We should use the wiki section to document each application we write for PoetExchange.
 - Writing documentation blows, but it's going to make our website more maintainable, especially as it expands to include more features and more applications.
+
+If you screw up the development Database, please fix it.
+--------------------------------------------------------
+- We're all sharing a sqlite database in the dev files folder.
+- When you're developing, stuff happens, and things break.
+- Don't use that as an excuse to leave them broken. 
+- Try pulling down the old (non-screwed up) database if you can; if that doesn't work, delete the screwed up database and start with a fresh one.
+- Remember to set the superuser name and password to 'admin'!
+
+Please don't commit static files, media files, or custom styles!
+-----------------------------------------------------------------------
+- Remember that everything we put on GitHub is open sourced.
+- It's all well and good if people want to use parts of our web applications, but we need to protect our branding!
+- This means try to avoid commiting things like our banner, our logo, our thumbnails, or our css styles (at least until we formally decide to license them under the creative commons :p)
+- Keep media & static files in a separate folder from the main project if you need to.
 
 Remember, we on the same team, yo.
 -------------------------------------
