@@ -111,6 +111,7 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+	'users',
 	'objects',
 	'south',
     'django.contrib.auth',
