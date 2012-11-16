@@ -4,6 +4,7 @@ class Semester(models.Model) :
 	season				= models.CharField(
 											max_length=4,
 											choices=(
+
 												('FALL', 'Fall'),
 												('SPNG', 'Spring'),
 											),
