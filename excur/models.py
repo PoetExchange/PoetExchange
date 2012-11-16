@@ -33,21 +33,26 @@ class WorkStudyJob(models.Model) :
 		job = "%s%s %s" % (self.academic_dept, self.administrative_dept, self.job_title)
 		return job
 
-class Club(models.Model) :
-	club_name			= models.CharField(max_length=30)
-	club_description	= models.TextField(
-									validators=[MaxLengthValidator(500)],
-									blank=True, null=True,
-								)
-	is_active			= models.BooleanField(default=True)
-
-class MinorityCaucus(models.Model) :
+class ExtraCurricular(models.Model) :
 	group_name			= models.CharField(max_length=30)
 	group_description	= models.TextField(
 									validators=[MaxLengthValidator(500)],
 									blank=True, null=True,
 								)
+	group_type			= models.CharField(
+									max_length=2,
+									choices=(
+										('CB','Club'),
+										('MC','Minority Caucus'),
+										('SG','Student Government'),
+										('SM','Student Media'),
+										('HS','Honors Society'),
+										('OR','Other'),
+									),
+								)
 	is_active			= models.BooleanField(default=True)
+	def __unicode__(self) :
+		return self.group_name
 
 class Society(models.Model) :
 	group_name			= models.CharField(max_length=12)
@@ -56,6 +61,8 @@ class Society(models.Model) :
 									blank=True, null=True,
 								)
 	is_active			= models.BooleanField(default=True)
+	def __unicode__(self) :
+		return self.group_name
 
 class Sport(models.Model) :
 	sport_name			= models.CharField(
@@ -70,10 +77,33 @@ class Sport(models.Model) :
 										('SPNG', 'Spring'),
 									)
 								)
+	def __unicode__(self) :
+		return self.sport_name
 
-class ExtraCurricular(models.Model) :
-	activity_name		= models.CharField(
-									max_length=30,
+class ExtraCurricularProfile(models.Model) :
+	group				= models.ForeignKey('ExtraCurricular')
+	semester			= models.ForeignKey('objects.Semester')
+	meeting_days		= models.ManyToManyField(
+									'objects.WeekDay',
+									blank=True, null=True,
 								)
-	activity_description=models.TextField(validators=[MaxLengthValidator(500)])
-	
+	meeting_time		= models.TimeField(blank=True, null=True)
+	meeting_area		= models.ForeignKey(
+									'objects.CampusArea',
+									blank=True, null=True,
+								)
+	meeting_room		= models.ForeignKey(
+									'objects.CampusRoom',
+									blank=True, null=True,
+								)
+#	officers
+	def __unicode__(self) :
+		value = "%s %s" % (self.group, self.semester)
+		return value
+
+
+#class SportProfile :
+#class SocietyProfile :
+#	society				= models.ForeignKey('Society')
+#	semester			= models.ForeignKey('objects.Semester')
+#	officers	

@@ -24,39 +24,19 @@ class User(models.Model) :
 	last_name           = models.CharField(
                                             max_length=75,
 										)
-	residence           = models.CharField(
-											max_length=3,
-                                            blank=True, null=True,
-											choices=(
-														('STF', 'Stauffer'),
-														('JON', 'Johnson'),
-														('BAL', 'Ball'),
-														('WRD', 'Wadman'),
-														('TRN', 'Turner'),
-														('HRS', 'Harris'),
-														('WBG', 'Wanberg'),
-														('ARB', 'Arbor Ridge'),
-														('OFF', 'OffCampus'),
-													)
-                                            )
+	residence           = models.ForeignKey('objects.CampusArea')
 	major               = models.ManyToManyField(
                                             'academics.AcademicDepartment',
                                             blank=True, null=True,
 										)
+	def __unicode__(self) :
+		return self.username
 
 class ActivitiesProfile(models.Model) :
 	user				= models.ForeignKey('User')
 	semester			= models.ForeignKey('objects.Semester')
 	classes				= models.ManyToManyField(
 											'academics.AcademicClass',
-											blank=True, null=True,
-										)
-	clubs				= models.ManyToManyField(
-											'excur.Club',
-											blank=True, null=True,
-										)
-	minority_caucus_groups=models.ManyToManyField(
-											'excur.MinorityCaucus',
 											blank=True, null=True,
 										)
 	society				= models.ForeignKey(
@@ -67,7 +47,7 @@ class ActivitiesProfile(models.Model) :
 											'excur.Sport',
 											blank=True, null=True,
 										)
-	other_extra_curriculars=models.ManyToManyField(
+	extra_curriculars	= models.ManyToManyField(
 											'excur.ExtraCurricular',
 											blank=True, null=True,
 										)
@@ -78,3 +58,8 @@ class ActivitiesProfile(models.Model) :
 											'excur.WorkStudyJob',
 											blank=True, null=True,
 										)
+	def __unicode__(self) :
+		value = "%s %s %d" % (self.user.username, self.semester.season, self.semester.year)
+		return value
+
+	

@@ -6,6 +6,7 @@ class Semester(models.Model) :
 											choices=(
 
 												('FALL', 'Fall'),
+												('JNRY', 'January'),
 												('SPNG', 'Spring'),
 											),
 										)
@@ -32,3 +33,26 @@ class WeekDay(models.Model) :
 	def __unicode__(self):
 		return self.day
 
+class CampusArea(models.Model) :
+	area				= models.CharField(max_length=50)
+	area_type			= models.CharField(
+											max_length=2,
+											choices=(
+												('OD','Outdoor'),
+												('CR','Classroom'),
+												('FH','Faculty House'),
+												('RH','Residence Hall'),
+												('MS','Meeting Space'),
+												('AB','Administrative Bldg'),
+												('OR','Other'),
+											),
+										)
+	def __unicode__(self) :
+		return self.area
+
+class CampusRoom(models.Model) :
+	room_number			= models.IntegerField(max_length=3)
+	area				= models.ForeignKey('CampusArea')
+	def __unicode__(self) :
+		value = "%s %d" % (self.area, self.room_number)
+		return value

@@ -78,7 +78,7 @@ class ProfRatingsTable(models.Model) :
 		particular professor, thereby providing an easy lookup to check if a
 		student has already rated a professor.
 		'''
-		code = int("%d%d" % (self.professor, self.user))
+		code = int("%d%d" % (self.professor.pk, self.user.pk))
 		return code
 	def save(self) :
 		'''
@@ -89,3 +89,20 @@ class ProfRatingsTable(models.Model) :
 		if not self.id :
 			self.rating_code = self.ratingCodeGenerator()
 		super(ProfRatingsTable, self).save(*args, **kwargs)
+
+class AcademicClassProfile(models.Model) :
+	ac_class			= models.ForeignKey('AcademicClass')
+	semester			= models.ForeignKey('objects.Semester')
+	meeting_days		= models.ManyToManyField(
+											'objects.WeekDay',
+											blank=True, null=True
+										)
+	meeting_time		= models.TimeField(blank=True, null=True)
+	meeting_room		= models.ForeignKey(
+											'objects.CampusRoom',
+											blank=True, null=True,
+										)
+	def __unicode__(self) :
+		value = "%s %s" % (self.ac_class, self.semester)
+		return value
+
