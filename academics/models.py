@@ -22,7 +22,7 @@ class Book(models.Model) :
 											validators=[MaxLengthValidator(500)],
 											blank=True, null=True,
 											)
-	entry_date			= models.DateTimeField()
+	entry_date			= models.DateTimeField(auto_now=True)
 	def __unicode__(self) :
 		return self.book_title
 
@@ -37,7 +37,7 @@ class AcademicClass(models.Model) :
 										'Professor',
 										blank=True, null=True,
 									)
-	last_updated		= models.DateTimeField()
+	last_updated		= models.DateTimeField(auto_now=True)
 	def __unicode__(self) :
 		return self.class_dept.dept_abrv + ' ' + str(self.class_number)
 	
