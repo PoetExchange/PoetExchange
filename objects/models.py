@@ -21,7 +21,7 @@ class Book(models.Model) :
 											validators=[MaxLengthValidator(500)],
 											blank=True, null=True,
 											)
-	entry_date			= models.DateTimeField()
+	entry_date			= models.DateTimeField(auto_now=True)
 	def __unicode__(self) :
 		return self.book_title
 
