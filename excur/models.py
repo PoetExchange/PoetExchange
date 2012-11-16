@@ -1,7 +1,6 @@
 from django.db import models
 from django.core.validators import MaxLengthValidator
 
-# Create your models here.
 class AdministrativeDepartment(models.Model) :
 	dept_name			= models.CharField(max_length=250)
 	dept_description	= models.TextField(

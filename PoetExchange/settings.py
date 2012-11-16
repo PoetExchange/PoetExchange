@@ -111,6 +111,8 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+	'excur',
+	'academics',
 	'users',
 	'objects',
 	'south',
