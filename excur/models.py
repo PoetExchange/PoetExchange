@@ -1,3 +1,27 @@
+######################
+# MODEL DEPENDENCIES
+######################
+# --------------------
+# DEPENDS ON: 'academics' app
+# --------------------
+# WorkStudyJob
+# --------------------
+# DEPENDS ON: 'users' app
+# --------------------
+# ExtrCurOfficer
+# TeamCapt
+# --------------------
+# DEPENDS ON: 'objects' app
+# --------------------
+# ExtraCurricularProfile
+# SocietyProfile
+# SportProfile
+# ExtrCurOfficer
+
+
+
+
+
 from django.db import models
 from django.core.validators import MaxLengthValidator
 
@@ -96,14 +120,80 @@ class ExtraCurricularProfile(models.Model) :
 									'objects.CampusRoom',
 									blank=True, null=True,
 								)
-#	officers
+	unique_key			= models.IntegerField(
+									max_length=8,
+									editable=False,
+									unique=True,
+								)
 	def __unicode__(self) :
 		value = "%s %s" % (self.group, self.semester)
 		return value
+	def save(self) :
+		if not self.id :
+			self.unique_key = int("%d%d" % (self.group.pk, self.semester.pk))
+		super(ExtraCurricularProfile, self).save(*args, **kwargs)
 
+class SocietyProfile(models.Model) :
+	group				= models.ForeignKey('Society')
+	semester			= models.ForeignKey('objects.Semester')
+	unique_key			= models.IntegerField(
+									max_length=8,
+									editable=False,
+									unique=True,
+								)
+	def __unicode__(self) :
+		value = "%s %s" % (self.group, self.semester)
+		return value
+	def save(self) :
+		if not self.id :
+			self.unique_key = int("%d%d" % (self.group.pk, self.semester.pk))
+		super(SocietyProfile, self).save(*args, **kwargs)
 
-#class SportProfile :
-#class SocietyProfile :
-#	society				= models.ForeignKey('Society')
-#	semester			= models.ForeignKey('objects.Semester')
-#	officers	
+class SportProile(models.Model) :
+	sport				= models.ForeignKey('Sport')
+	semester			= models.ForeignKey('objects.Semester')
+	unique_key			= models.IntegerField(
+									max_length=8,
+									editable=False,
+									unique=True,
+								)
+	def __unicode__(self) :
+		value = "%s %s" % (self.group, self.semester)
+		return value
+	def save(self) :
+		if not self.id :
+			self.unique_key = int("%d%d" % (self.group.pk, self.semester.pk))
+		super(SportProfile, self).save(*args, **kwargs)
+
+class ExtrCurOfficer(models.Model) :
+	position_name		= models.CharField(max_length=30)
+	position_semester	= models.ForeignKey('objects.Semester')
+	user				= models.ForeignKey('users.ActivitiesProfile')
+	group_type			= models.CharField(
+									max_length=1,
+									choices=(
+										('SO', 'Society'),
+										('CB', 'Club'),
+										('MC','Minority Caucus'),
+										('SG','Student Government'),
+										('SM','Student Media'),
+										('HS','Honors Society'),
+										('OR','Other'),
+									)
+								)
+	ex_cur_profile		= models.ForeignKey(
+										'ExtraCurricularProfile',
+										blank=True, null=True
+									)
+	society_profile				= models.ForeignKey(
+										'SocietyProfile',
+										blank=True, null=True,
+									)
+	def __unicode__(self) :
+		value = "%s%s %s" % (self.ex_cur_profile, self.society_profile, self.position_names)
+		return value
+
+class TeamCapt(models.Model) :
+	user				= models.ForeignKey('users.ActivitiesProfile')
+	sport				= models.ForegnKey('Sport')
+	year				= models.IntegerField(max_length=4)

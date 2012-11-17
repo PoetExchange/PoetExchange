@@ -1,3 +1,20 @@
+#####################
+# MODEL DEPENDENCIES
+#####################
+# -------------------
+# DEPENDS ON: 'objects' app
+# -------------------
+# User
+# ActivitiesProfile
+# -------------------
+# DEPENDS ON: 'academics' app
+# -------------------
+# ActivitiesProfile
+# -------------------
+# DEPENDS ON: 'excur' app
+# -------------------
+# ActivitiesProfile
+
 from django.db import models
 
 class User(models.Model) :

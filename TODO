@@ -1,11 +1,8 @@
 To Do:
 ========
 
-- Reorganize models files so all models with dependencies on external apps are at top of file
+- Add documantation at top of each models file detailing model dependencies
 - Review model files to ensure unique=True properties are applied where appropriate
-- Review model filed to ensure blank=True, null=True properties are applied where appropriate
-- Add functionality allowing users to claim officership in extracurricular orgs each semester
-- Add special functionality allowing org executives to be identified on org profile pages
-- Build profile data structures for Societies and for Sports
+- Review model files to ensure blank=True, null=True properties are applied where appropriate
 - Begin work on comments application
 - Finish constructing user/class/professor rating system [low priority]
