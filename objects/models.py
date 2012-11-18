@@ -39,7 +39,7 @@ class CampusArea(models.Model) :
 											max_length=2,
 											choices=(
 												('OD','Outdoor'),
-												('CR','Classroom'),
+												('AC','Academic Building'),
 												('FH','Faculty House'),
 												('RH','Residence Hall'),
 												('MS','Meeting Space'),

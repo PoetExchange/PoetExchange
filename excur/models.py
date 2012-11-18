@@ -149,7 +149,7 @@ class SocietyProfile(models.Model) :
 			self.unique_key = int("%d%d" % (self.group.pk, self.semester.pk))
 		super(SocietyProfile, self).save(*args, **kwargs)
 
-class SportProile(models.Model) :
+class SportProfile(models.Model) :
 	sport				= models.ForeignKey('Sport')
 	semester			= models.ForeignKey('objects.Semester')
 	unique_key			= models.IntegerField(
