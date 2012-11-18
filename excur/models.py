@@ -195,5 +195,5 @@ class ExtrCurOfficer(models.Model) :
 
 class TeamCapt(models.Model) :
 	user				= models.ForeignKey('users.ActivitiesProfile')
-	sport				= models.ForegnKey('Sport')
+	sport				= models.ForeignKey('Sport')
 	year				= models.IntegerField(max_length=4)
