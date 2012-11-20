@@ -12,21 +12,29 @@ class Semester(models.Model) :
 										)
 	year				= models.IntegerField(max_length=4)
 	is_current			= models.BooleanField()
+	unique_key			= models.CharField(
+											editable=False,
+											unique=True,
+											max_length=8,
+										)
 	def __unicode__(self) :
 		sem = "%s %d" % (self.season, self.year)
 		return sem
+	def save(self, *args, **kwargs) :
+		self.unique_key = "%s%d" % (self.season, self.year)
+		super(Semester, self).save(*args, **kwargs)
 
 class WeekDay(models.Model) :
 	day					= models.CharField(
-											max_length=1,
+											max_length=3,
 											choices=(
-												('M', 'Monday'),
-												('T', 'Tuesday'),
-												('W', 'Wednesday'),
-												('R', 'Thursday'),
-												('F', 'Friday'),
-												('A', 'Saturday'),
-												('U', 'Sunday'),
+												('MON', 'Monday'),
+												('TUE', 'Tuesday'),
+												('WED', 'Wednesday'),
+												('THR', 'Thursday'),
+												('FRI', 'Friday'),
+												('SAT', 'Saturday'),
+												('SUN', 'Sunday'),
 											),
 											unique=True,
 										)
@@ -34,7 +42,10 @@ class WeekDay(models.Model) :
 		return self.day
 
 class CampusArea(models.Model) :
-	area				= models.CharField(max_length=50)
+	area				= models.CharField(
+											max_length=50,
+											unique=True,
+										)
 	area_type			= models.CharField(
 											max_length=2,
 											choices=(
@@ -53,6 +64,13 @@ class CampusArea(models.Model) :
 class CampusRoom(models.Model) :
 	room_number			= models.IntegerField(max_length=3)
 	area				= models.ForeignKey('CampusArea')
+	unique_key			= models.IntegerField(
+											editable=False,
+											unique=True,
+										)
 	def __unicode__(self) :
 		value = "%s %d" % (self.area, self.room_number)
 		return value
+	def save(self, *args, **kwargs) :
+		self.unique_key = self.area.pk + self.room_number
+		super(CampusRoom, self).save(*args, **kwargs)

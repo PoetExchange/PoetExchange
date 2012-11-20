@@ -5,12 +5,17 @@
 # DEPENDS ON: 'objects' app
 # ------------------
 # AcademicClassProfile
+# ------------------
+# DEPENDS ON: 'users' app
+# -----------------
+# Book
 
 
 from django.db import models
 from django.core.validators import MaxLengthValidator
 
 class Book(models.Model) :
+	book_seller			= models.ForeignKey('users.User')
 	book_title			= models.CharField(max_length=250)
 	book_author			= models.CharField(max_length=250)
 	book_class			= models.ForeignKey('AcademicClass')
@@ -31,8 +36,12 @@ class Book(models.Model) :
 											blank=True, null=True,
 											)
 	entry_date			= models.DateTimeField(auto_now=True)
+	user_class_key		= models.IntegerField(editable=False,)
 	def __unicode__(self) :
 		return self.book_title
+	def save(self,*args,**kwargs) :
+		self.user_class_key = self.book_seller.pk + self.book_class.pk
+		super(Book, self).save(*args, **kwargs)
 
 class AcademicClass(models.Model) :
 	class_dept			= models.ForeignKey('AcademicDepartment')
@@ -46,12 +55,25 @@ class AcademicClass(models.Model) :
 										blank=True, null=True,
 									)
 	last_updated		= models.DateTimeField(auto_now=True)
+	unique_key			= models.IntegerField(
+										editable=False,
+										unique=True,
+									)
 	def __unicode__(self) :
 		return self.class_dept.dept_abrv + ' ' + str(self.class_number)
+	def save(self, *args, **kwargs) :
+		self.unique_key = self.dept.pk + self.class_number
+		super(AcademicClass, self).save(*args, **kwargs)
 	
 class AcademicDepartment(models.Model) :
-	dept_name			= models.CharField(max_length=250)
-	dept_abrv			= models.CharField(max_length=4)
+	dept_name			= models.CharField(
+											max_length=250,
+											unique=True,
+										)
+	dept_abrv			= models.CharField(
+											max_length=4,
+											unique=True,
+										)
 	def __unicode__(self) :
 		return self.dept_abrv
 
@@ -62,8 +84,15 @@ class Professor(models.Model) :
 											)
 	last_name			= models.CharField(max_length=80)
 	department			= models.ForeignKey('AcademicDepartment')
+	unique_key			= models.CharField(
+											max_length=100,
+											editable=False,
+											unique=True,
+										)
 	def __unicode__(self) :
 		return self.last_name
+	def save(self, *args, **kwargs) :
+		self.unique_key = self.last_name + self.department
 
 class AcademicClassProfile(models.Model) :
 	ac_class			= models.ForeignKey('AcademicClass')
@@ -77,7 +106,15 @@ class AcademicClassProfile(models.Model) :
 											'objects.CampusRoom',
 											blank=True, null=True,
 										)
+	unique_key			= models.IntegerField(
+											editable=False,
+											unique=True,
+										)
 	def __unicode__(self) :
 		value = "%s %s" % (self.ac_class, self.semester)
 		return value
+	def save(self, *args, **kwargs) :
+			self.unique_key = self.ac_class.pk + self.semester.pk
+			super(AcademicClassProfile, self).save(*args, **kwargs)
+		
 

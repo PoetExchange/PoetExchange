@@ -26,11 +26,14 @@ from django.db import models
 from django.core.validators import MaxLengthValidator
 
 class AdministrativeDepartment(models.Model) :
-	dept_name			= models.CharField(max_length=250)
+	dept_name			= models.CharField(
+										max_length=250,
+										unique=True
+									)
 	dept_description	= models.TextField(
-											validators=[MaxLengthValidator(500)],
-											blank=True, null=True,
-										)
+										validators=[MaxLengthValidator(500)],
+										blank=True, null=True,
+									)
 	def __unicode__(self) :
 		return self.dept_name
 
@@ -53,12 +56,23 @@ class WorkStudyJob(models.Model) :
 	job_title			= models.CharField(
 									max_length=50,
 								)
+	unique_key			= models.CharField(
+									editable=False,
+									max_length=54,
+									unique=True,
+								)
 	def __unicode__(self) :
 		job = "%s%s %s" % (self.academic_dept, self.administrative_dept, self.job_title)
 		return job
+	def save(self, *args, **kwargs) :
+		self.unique_key= "%d%d%s" % (self.academic_dept.pk, self.administrative_dept.pk, self.job_title)
+		super(WorkStudyJob, self).save(*args, **kwargs)
 
 class ExtraCurricular(models.Model) :
-	group_name			= models.CharField(max_length=30)
+	group_name			= models.CharField(
+									max_length=30,
+									unique=True,
+								)
 	group_description	= models.TextField(
 									validators=[MaxLengthValidator(500)],
 									blank=True, null=True,
@@ -79,7 +93,10 @@ class ExtraCurricular(models.Model) :
 		return self.group_name
 
 class Society(models.Model) :
-	group_name			= models.CharField(max_length=12)
+	group_name			= models.CharField(
+											max_length=12,
+											unique=True,
+										)
 	group_description	= models.TextField(
 									validators=[MaxLengthValidator(500)],
 									blank=True, null=True,
@@ -128,9 +145,8 @@ class ExtraCurricularProfile(models.Model) :
 	def __unicode__(self) :
 		value = "%s %s" % (self.group, self.semester)
 		return value
-	def save(self) :
-		if not self.id :
-			self.unique_key = int("%d%d" % (self.group.pk, self.semester.pk))
+	def save(self, *args, **kwargs) :
+		self.unique_key = int("%d%d" % (self.group.pk, self.semester.pk))
 		super(ExtraCurricularProfile, self).save(*args, **kwargs)
 
 class SocietyProfile(models.Model) :
@@ -144,9 +160,8 @@ class SocietyProfile(models.Model) :
 	def __unicode__(self) :
 		value = "%s %s" % (self.group, self.semester)
 		return value
-	def save(self) :
-		if not self.id :
-			self.unique_key = int("%d%d" % (self.group.pk, self.semester.pk))
+	def save(self, *args, **kwargs) :
+		self.unique_key = int("%d%d" % (self.group.pk, self.semester.pk))
 		super(SocietyProfile, self).save(*args, **kwargs)
 
 class SportProfile(models.Model) :
@@ -160,9 +175,8 @@ class SportProfile(models.Model) :
 	def __unicode__(self) :
 		value = "%s %s" % (self.group, self.semester)
 		return value
-	def save(self) :
-		if not self.id :
-			self.unique_key = int("%d%d" % (self.group.pk, self.semester.pk))
+	def save(self, *args, **kwargs) :
+		self.unique_key = int("%d%d" % (self.group.pk, self.semester.pk))
 		super(SportProfile, self).save(*args, **kwargs)
 
 class ExtrCurOfficer(models.Model) :
@@ -197,3 +211,13 @@ class TeamCapt(models.Model) :
 	user				= models.ForeignKey('users.ActivitiesProfile')
 	sport				= models.ForeignKey('Sport')
 	year				= models.IntegerField(max_length=4)
+	unique_key			= models.IntegerField(
+										editable=False,
+										unique=True,
+									)
+	def __unicode__(self) :
+		value = "%s %s %s %d" % (self.user.first_name, self.user.last_name, self.sport, self.year)
+		return value
+	def save(self, *args, **kwargs) :
+		self.unique_key = self.user.pk + self.sport.pk + self.year.pk
+		super(TeamCapt, self).save(*args, **kwargs)

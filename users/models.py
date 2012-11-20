@@ -16,12 +16,15 @@
 # ActivitiesProfile
 
 from django.db import models
+from django.contrib.auth.models import User
 
 class User(models.Model) :
+	user				= models.OneToOneField(User)
 	enabled				= models.BooleanField()
 	username            = models.CharField(  
 											max_length=8,
                                             help_text="Enter poets username",
+											unique=True,
 										)
 	area_code	        = models.IntegerField(
                                             max_length=3,
@@ -75,8 +78,13 @@ class ActivitiesProfile(models.Model) :
 											'excur.WorkStudyJob',
 											blank=True, null=True,
 										)
+	unique_key			= models.IntegerField(
+											editable=False,
+											unique=True,
+										)
 	def __unicode__(self) :
 		value = "%s %s %d" % (self.user.username, self.semester.season, self.semester.year)
 		return value
-
-	
+	def save(self, *args, **kwargs) :
+		self.unique_key = self.user.pk + self.semester.pk
+		super(ActivitiesProfile, self).save(*args, **kwargs)	
