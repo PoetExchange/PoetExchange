@@ -4,6 +4,10 @@ PoetExchange
 All web applications associated with the PoetExchange.com website.
 
 --------------
+ANNOUNCEMENTS
+--------------
+*11/20/12* Models are now in feature freeze. Please do not add new models, add new fields/methods to models, or add new parameters to model fields without approval from the entire development team. All development efforts should now be redirected toward the implementation of forms.
+---------------------
 GENERAL DEV GUIDELINES
 --------------
 These are some general guidelines which I thought would make our lives much easier when it comes to code collaboration. Feel free to add to the list if you think of more

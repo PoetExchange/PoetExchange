@@ -1,4 +1,5 @@
 from django.db import models
+from django.template.defaultfilters import slugify
 
 class Semester(models.Model) :
 	season				= models.CharField(
@@ -17,11 +18,14 @@ class Semester(models.Model) :
 											unique=True,
 											max_length=8,
 										)
+	semester_slug		= models.SlugField(editable=False)
 	def __unicode__(self) :
 		sem = "%s %d" % (self.season, self.year)
 		return sem
 	def save(self, *args, **kwargs) :
 		self.unique_key = "%s%d" % (self.season, self.year)
+		if not self.id :
+			self.semester_slug = slugify(self.unique_key)
 		super(Semester, self).save(*args, **kwargs)
 
 class WeekDay(models.Model) :

@@ -17,13 +17,9 @@
 # SocietyProfile
 # SportProfile
 # ExtrCurOfficer
-
-
-
-
-
 from django.db import models
 from django.core.validators import MaxLengthValidator
+from django.template.defaultfilters import slugify
 
 class AdministrativeDepartment(models.Model) :
 	dept_name			= models.CharField(
@@ -34,8 +30,13 @@ class AdministrativeDepartment(models.Model) :
 										validators=[MaxLengthValidator(500)],
 										blank=True, null=True,
 									)
+	dept_slug			= models.SlugField(editable=False)
 	def __unicode__(self) :
 		return self.dept_name
+	def save(self, *args, **kwargs) :
+		if not self.id :
+			self.dept_slug = slugify(self.dept_name)
+		super(AdministrativeDept, self).save(*args, **kwargs)
 
 class WorkStudyJob(models.Model) :
 	dept_type 			= models.CharField(
@@ -61,10 +62,14 @@ class WorkStudyJob(models.Model) :
 									max_length=54,
 									unique=True,
 								)
+	job_slug			= models.SlugField(editable=False)	
 	def __unicode__(self) :
 		job = "%s%s %s" % (self.academic_dept, self.administrative_dept, self.job_title)
 		return job
 	def save(self, *args, **kwargs) :
+		if not self.id :
+			unslugged = self.academic_dept + self.administrative_dept + ' ' + self.job_title
+			self.job_slug = slugify(unslugged)
 		self.unique_key= "%d%d%s" % (self.academic_dept.pk, self.administrative_dept.pk, self.job_title)
 		super(WorkStudyJob, self).save(*args, **kwargs)
 
@@ -89,8 +94,13 @@ class ExtraCurricular(models.Model) :
 									),
 								)
 	is_active			= models.BooleanField(default=True)
+	group_slug			= models.SlugField(editable=False)
 	def __unicode__(self) :
 		return self.group_name
+	def save(self, *args, **kwargs) :
+		if not self.id :
+			self.group_slug = slugify(group_name)
+		super(ExtraCurricular, self).save(*args, **kwargs)
 
 class Society(models.Model) :
 	group_name			= models.CharField(
@@ -102,8 +112,13 @@ class Society(models.Model) :
 									blank=True, null=True,
 								)
 	is_active			= models.BooleanField(default=True)
+	group_slug			= models.SlugField(editable=False)
 	def __unicode__(self) :
 		return self.group_name
+	def save(self, *args, **kwargs) :
+		if not self.id :
+			self.group_slug = slugify(group_name)
+		super(Society, self).save(*args, **kwargs)
 
 class Sport(models.Model) :
 	sport_name			= models.CharField(
@@ -118,8 +133,13 @@ class Sport(models.Model) :
 										('SPNG', 'Spring'),
 									)
 								)
+	sport_slug			= models.SlugField(editable=False)
 	def __unicode__(self) :
 		return self.sport_name
+	def save(self, *args, **kwargs) :
+		if not self.id :
+			self.sport_slug = slugify(sport_name)
+		super(Sport, self).save(*args, **kwargs)
 
 class ExtraCurricularProfile(models.Model) :
 	group				= models.ForeignKey('ExtraCurricular')
@@ -182,7 +202,7 @@ class SportProfile(models.Model) :
 class ExtrCurOfficer(models.Model) :
 	position_name		= models.CharField(max_length=30)
 	position_semester	= models.ForeignKey('objects.Semester')
-	user				= models.ForeignKey('users.ActivitiesProfile')
+	user				= models.ForeignKey('users.SiteUser')
 	group_type			= models.CharField(
 									max_length=1,
 									choices=(
@@ -195,20 +215,27 @@ class ExtrCurOfficer(models.Model) :
 										('OR','Other'),
 									)
 								)
-	ex_cur_profile		= models.ForeignKey(
-										'ExtraCurricularProfile',
+	ex_cur_group		= models.ForeignKey(
+										'ExtraCurricular',
 										blank=True, null=True
 									)
-	society_profile				= models.ForeignKey(
-										'SocietyProfile',
+	society_group		= models.ForeignKey(
+										'Society',
 										blank=True, null=True,
+									)
+	slug_group			= models.CharField(
+										max_length=30,
+										editable=False,
 									)
 	def __unicode__(self) :
 		value = "%s%s %s" % (self.ex_cur_profile, self.society_profile, self.position_names)
 		return value
+	def save(self,*args, **kwargs) :
+		self.slug_group = slugify(self.position_name)
+		super(ExtrCurOfficer, self).save(*args, **kwargs)
 
 class TeamCapt(models.Model) :
-	user				= models.ForeignKey('users.ActivitiesProfile')
+	user				= models.ForeignKey('users.SiteUser')
 	sport				= models.ForeignKey('Sport')
 	year				= models.IntegerField(max_length=4)
 	unique_key			= models.IntegerField(

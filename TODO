@@ -1,6 +1,4 @@
 To Do:
 ========
-- CRITICAL: Add slug fields to all models which may display as their own pages at any point
-- Review model files to ensure blank=True, null=True properties are applied where appropriate
 - Begin work on comments application [low priority]
 - Finish constructing user/class/professor rating system [low priority]

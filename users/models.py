@@ -18,7 +18,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class User(models.Model) :
+class SiteUser(models.Model) :
 	user				= models.OneToOneField(User)
 	enabled				= models.BooleanField()
 	username            = models.CharField(  
@@ -49,11 +49,18 @@ class User(models.Model) :
                                             'academics.AcademicDepartment',
                                             blank=True, null=True,
 										)
+	user_photo			= models.ImageField(blank=True, null=True,
+											upload_to='/tmp',)
+	user_slug			= models.SlugField(editable=False)
 	def __unicode__(self) :
 		return self.username
+	def save(self, *args, **kwargs) :
+		if not self.id :
+			self.user_slug = username
+		super(User, self).save(*args, **kwargs)
 
 class ActivitiesProfile(models.Model) :
-	user				= models.ForeignKey('User')
+	user				= models.ForeignKey('SiteUser')
 	semester			= models.ForeignKey('objects.Semester')
 	classes				= models.ManyToManyField(
 											'academics.AcademicClass',

@@ -13,9 +13,10 @@
 
 from django.db import models
 from django.core.validators import MaxLengthValidator
+from django.template.defaultfilters import slugify
 
 class Book(models.Model) :
-	book_seller			= models.ForeignKey('users.User')
+	book_seller			= models.ForeignKey('users.SiteUser')
 	book_title			= models.CharField(max_length=250)
 	book_author			= models.CharField(max_length=250)
 	book_class			= models.ForeignKey('AcademicClass')
@@ -35,11 +36,14 @@ class Book(models.Model) :
 											validators=[MaxLengthValidator(500)],
 											blank=True, null=True,
 											)
-	entry_date			= models.DateTimeField(auto_now=True)
+	entry_date			= models.DateTimeField(auto_now=True,)
 	user_class_key		= models.IntegerField(editable=False,)
+	book_slug			= models.SlugField(editable=False,)
 	def __unicode__(self) :
 		return self.book_title
 	def save(self,*args,**kwargs) :
+		if not self.id :
+			self.book_slug = self.pk
 		self.user_class_key = self.book_seller.pk + self.book_class.pk
 		super(Book, self).save(*args, **kwargs)
 
@@ -59,9 +63,13 @@ class AcademicClass(models.Model) :
 										editable=False,
 										unique=True,
 									)
+	ac_slug				= models.SlugField(editable=False)
 	def __unicode__(self) :
 		return self.class_dept.dept_abrv + ' ' + str(self.class_number)
 	def save(self, *args, **kwargs) :
+		if not self.id :
+			unslugged = "%s %d" % (self.class_dept.dept_abrv, self.class_number)
+			self.ac_slug = slugify(unslugged)
 		self.unique_key = self.dept.pk + self.class_number
 		super(AcademicClass, self).save(*args, **kwargs)
 	
@@ -74,8 +82,13 @@ class AcademicDepartment(models.Model) :
 											max_length=4,
 											unique=True,
 										)
+	dept_slug			= models.SlugField(editable=False)
 	def __unicode__(self) :
 		return self.dept_abrv
+	def save(self, *args, **kwargs) :
+		if not self.id :
+			dept_slug = slugify(self.dept_abrv)
+		super(AcademicDepartment, self).save(*args, **kwargs)
 
 class Professor(models.Model) :
 	first_name			= models.CharField(
@@ -99,7 +112,7 @@ class AcademicClassProfile(models.Model) :
 	semester			= models.ForeignKey('objects.Semester')
 	meeting_days		= models.ManyToManyField(
 											'objects.WeekDay',
-											blank=True, null=True
+											blank=True, null=True,
 										)
 	meeting_time		= models.TimeField(blank=True, null=True)
 	meeting_room		= models.ForeignKey(
