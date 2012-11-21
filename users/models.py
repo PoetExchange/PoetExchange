@@ -16,16 +16,11 @@
 # ActivitiesProfile
 
 from django.db import models
+from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 
 class SiteUser(models.Model) :
 	user				= models.OneToOneField(User)
-	enabled				= models.BooleanField()
-	username            = models.CharField(  
-											max_length=8,
-                                            help_text="Enter poets username",
-											unique=True,
-										)
 	area_code	        = models.IntegerField(
                                             max_length=3,
                                             blank=True, null=True,
@@ -37,12 +32,6 @@ class SiteUser(models.Model) :
 	phone_suffix		= models.IntegerField(
 											max_length=4,
 											blank=True, null=True,
-										)
-	first_name          = models.CharField(
-                                            max_length=75,
-										)
-	last_name           = models.CharField(
-                                            max_length=75,
 										)
 	residence           = models.ForeignKey('objects.CampusArea')
 	major               = models.ManyToManyField(
@@ -56,8 +45,22 @@ class SiteUser(models.Model) :
 		return self.username
 	def save(self, *args, **kwargs) :
 		if not self.id :
-			self.user_slug = username
+			self.user_slug = self.user.username
 		super(User, self).save(*args, **kwargs)
+#def create_SiteUser(sender, instance, created, **kwargs) :
+#	if created:
+#		SiteUser.objects.create(user=instance)
+#post_save.connect(create_SiteUser, sender=User)
+class RegValidator(models.Model) :
+	'''
+	This model holds temporary entries for user registration validation number.
+	These entries are removed once registration is complete
+	'''
+	valid_code 			= models.CharField(
+											max_length=10,
+											unique=True,
+										)
+	user				= models.CharField(max_length=8)
 
 class ActivitiesProfile(models.Model) :
 	user				= models.ForeignKey('SiteUser')

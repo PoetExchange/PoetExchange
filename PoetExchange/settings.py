@@ -4,6 +4,8 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 projectDir = os.path.realpath(os.path.dirname(__file__)) + '/'
 
+AUTH_PROFILE_MODULE = 'users.SiteUser'
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
