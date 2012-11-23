@@ -4,13 +4,16 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
-urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'PoetExchange.views.home', name='home'),
-    # url(r'^PoetExchange/', include('PoetExchange.foo.urls')),
+urlpatterns = patterns('objects.views',
+     url(r'^index/$','index'),
+     #url(r'^index/books/$','bookIndex'),
+     url(r'^index/books/(?P<book_id>\d+)/$', 'detail'),
+)
 
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    url(r'^admin/', include(admin.site.urls)),
+urlpatterns += patterns('',
+     url(r'^index/books/',include('objects.urls')),
+     url(r'^admin/', include(admin.site.urls)),
+#There are problems with user/views.py, when you uncomment the line below, you won't be able to open admin site. It says there's syntax error..
+     #url(r'^profile/$','users.views.initRegistration'),
+     #url(r'^signup/$','users.views.signup'),
 )

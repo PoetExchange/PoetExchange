@@ -15,7 +15,7 @@ from django.db import models
 # Create your models here.
 class ProfRatingsTable(models.Model) :
 	professor			= models.ForeignKey('academics.Professor')
-	user				= models.ForeignKey('users.User')
+	user				= models.ForeignKey('users.SiteUser')
 	rating				= models.IntegerField(
 											choices=(
 												(-1, '-1'),

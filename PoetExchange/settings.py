@@ -107,17 +107,18 @@ ROOT_URLCONF = 'PoetExchange.urls'
 WSGI_APPLICATION = 'PoetExchange.wsgi.application'
 
 TEMPLATE_DIRS = (
+	'%stemplates/'%projectDir,
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
 
 INSTALLED_APPS = (
-	'excur',
-	'academics',
-	'users',
-	'objects',
-	'south',
+    'excur',
+    'academics',
+    'users',
+    'objects','ratings',
+    'south',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
