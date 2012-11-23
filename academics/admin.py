@@ -1,5 +1,5 @@
-from academics.models import Book, AcademicClass, AcademicDepartment, Professor, AcademicClassProfile
 from django.contrib import admin
+from academics.models import *
 
 class bookList(admin.ModelAdmin):
 	#model = Book
@@ -27,6 +27,3 @@ admin.site.register(AcademicClass,classList)
 admin.site.register(AcademicDepartment,deptList)
 admin.site.register(Professor,profList)
 admin.site.register(AcademicClassProfile)
-
-
-

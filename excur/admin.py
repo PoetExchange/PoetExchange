@@ -1,6 +1,5 @@
-from excur.models import AdministrativeDepartment,WorkStudyJob,ExtraCurricular,Society,Sport,ExtraCurricularProfile,SocietyProfile,SportProfile,ExtrCurOfficer,TeamCapt
-
 from django.contrib import admin
+from excur.models import *
 
 admin.site.register(AdministrativeDepartment)
 admin.site.register(WorkStudyJob)

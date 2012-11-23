@@ -1,4 +1,4 @@
-from users.models import SiteUser, ActivitiesProfile, RegValidator
+from users.models import *
 #Import some more classes, if you've modified in the models.py
 from django.contrib import admin
 
@@ -8,5 +8,5 @@ class userList(admin.ModelAdmin):
 
 admin.site.register(SiteUser,userList)
 admin.site.register(ActivitiesProfile)
-#I'm not sure if RegValidator is supposed to be showed up
-admin.site.register(RegValidator)
+# RegValidator should not be registered; this class works as an underpinning to the registration framework
+#admin.site.register(RegValidator)

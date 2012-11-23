@@ -1,4 +1,4 @@
-from objects.models import Semester,CampusArea,WeekDay,CampusRoom
+from objects.models import *
 from django.contrib import admin
 
 
