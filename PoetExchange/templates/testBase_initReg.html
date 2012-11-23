@@ -1,0 +1,10 @@
+{% extends "testBase.html" %}
+
+{% block content %}
+<form action="" method="post">
+{% csrf_token %}
+<label for="uname">Please enter your my.whittier username: </label>
+{{ form.uname }}
+<input type="submit" name="sbutton" value="Submit" />
+</form>
+{% endblock content %}
