@@ -42,11 +42,11 @@ class SiteUser(models.Model) :
 											upload_to='/tmp',)
 	user_slug			= models.SlugField(editable=False)
 	def __unicode__(self) :
-		return self.username
+		return self.user.username
 	def save(self, *args, **kwargs) :
 		if not self.id :
 			self.user_slug = self.user.username
-		super(User, self).save(*args, **kwargs)
+		super(SiteUser, self).save(*args, **kwargs)
 #def create_SiteUser(sender, instance, created, **kwargs) :
 #	if created:
 #		SiteUser.objects.create(user=instance)
