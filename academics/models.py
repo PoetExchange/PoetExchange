@@ -70,7 +70,7 @@ class AcademicClass(models.Model) :
 		if not self.id :
 			unslugged = "%s %d" % (self.class_dept.dept_abrv, self.class_number)
 			self.ac_slug = slugify(unslugged)
-		self.unique_key = self.dept.pk + self.class_number
+		self.unique_key = self.class_dept.pk + self.class_number
 		super(AcademicClass, self).save(*args, **kwargs)
 	
 class AcademicDepartment(models.Model) :
