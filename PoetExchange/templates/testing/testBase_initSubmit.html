@@ -1,11 +1,11 @@
-{% extends 'testBase.html' %}
+{% extends 'testing/testBase.html' %}
 
 {% block content %}
 <h5>Your form submission was successful!</h5>
 <p>This confirmation code would be sent to:<br />
 {{ email }}</p>
-<p>The username registered was<br />
+<p>The username registered was:<br />
 {{ uname }}</p>
-<p>The associated validation code is<br />
-{{ vcode }}</p>
+<p>The associated registration url is:<br />
+{{ regUrl }}</p>
 {% endblock content %}

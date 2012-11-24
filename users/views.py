@@ -4,6 +4,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from users.forms import *
 from users.models import RegValidator, SiteUser
 from users.functions import mainRegValidator, valCodeGenerator
+# NOTE: All context variables which have a comment readig **tmp** next to them are variables which are present only for testing/debugging purposes, and will not remain in context during production
 
 def initRegistration(request) :
 	'''
@@ -21,33 +22,51 @@ def initRegistration(request) :
 								valid_code=valCodeGenerator(), # TODO: write function
 							)
 			regVal.save()
+			regUrl = unicode('/register/') + unicode(regVal.user) + unicode('?valid_code=%s' % regVal.valid_code)
 			email = form.cleaned_data['uname'] + '@poets.whittier.edu'
 			# TODO: Insert function which sends out email, including validation code as GET variable
 			return render_to_response( # R2R page showing email which val code has been sent to
-								'testBase_initSubmit.html', 
+								'testing/testBase_initSubmit.html', 
 								{
 									'email':email,
-									'uname':form.cleaned_data['uname'],
-									'vcode':regVal.valid_code,
-								}, 
+									'uname':form.cleaned_data['uname'],# **tmp**
+									'regUrl':regUrl,# **tmp**
+								},
 								context_instance=RequestContext(request),
 							)
 		else :  # Return user to form with errors if not valid
 			return render_to_response(
-								'testBase_initReg.html', 
+								'testing/testBase_initReg.html', 
 								{ 'form':form}, 
 								context_instance = RequestContext(request),
 							)
 	else :  # User is not registered and not submitting; render blank form
 		form=InitRegForm()
 		return render_to_response(
-								'testBase_initReg.html',
+								'testing/testBase_initReg.html',
 								{'form':form},
 								context_instance=RequestContext(request),
 							)
 
-# TODO: Move this function into a functions.py file, import into this file
-
+def testRegValidator(request, user_slug) :
+	'''
+	This function is for the purpose of testing the mainRegValidator() function
+	'''
+	uname = user_slug
+	valid = mainRegValidator(request.GET, uname)
+	getList = []
+	for item in request.GET :
+		getList.append([item, request.GET[item]])
+	return render_to_response(
+								'testing/testBase_regVal.html', 
+								{ 
+									'valid':valid, 
+									'list':getList,
+									'dbuser':uname, 
+									'getdic':request.GET,
+								},
+								context_instance=RequestContext(request),
+							)
 	
 
 def mainRegistration(request, user_slug) :
@@ -55,8 +74,8 @@ def mainRegistration(request, user_slug) :
 	Runs all the same checks as initRegistration function;
 	Creates new user if form is submitted and valid
 	'''
-	# TODO: Find way for form to resubmit to itself while sending validation code -- UPDATE: Best potential solution would seem to be to send  as POST data passed in  hidden, prepopulated fields on form
 	uname = user_slug
+	# TODO: Find way for form to resubmit to itself while sending validation code -- UPDATE: Best potential solution would seem to be to send  as POST data passed in  hidden, prepopulated fields on form
 	if request.method != 'POST' :
 		if not mainRegValidator(request.GET, uname) :
 			return render_to_response( # Error page stating registration request does not exist
@@ -81,7 +100,7 @@ def mainRegistration(request, user_slug) :
 			user = User.objects.create_user(
 								username=uname, # CRITICAL: uname input not sanitized if not coming from form; this is a potential security risk. Resolve ASAP.
 								password=form.cleaned_data['passwd'],
-								email=uname + '@poets.whittier.edu',
+								email=uname + unicode('@poets.whittier.edu'),
 							)
 			user.save()
 			siteUser = SiteUser.objects.create(

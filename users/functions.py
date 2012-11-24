@@ -1,3 +1,5 @@
+from users.models import RegValidator
+
 def mainRegValidator(reqmethod, usr):
 		'''
 		This function is used inside of the mainRegistration function to check that the username/validation code pair checks out
@@ -6,14 +8,14 @@ def mainRegValidator(reqmethod, usr):
 		The third check,, contained in the if block, ensures that the username attempting to register is in fact the username associated with the registration code
 		'''
 		try :
-			val_code = reqmethod['valid']
+			vcode = reqmethod['valid_code']
 		except KeyError :
 			return False
 		try:
 			valid = RegValidator.objects.get(valid_code=vcode)
 		except RegValidator.DoesNotExist :
 			return False
-		if valid.user != uname :
+		if valid.user != usr :
 			return False
 		return True
 
