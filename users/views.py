@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from users.forms import *
 from users.models import RegValidator, SiteUser
 from users.functions import mainRegValidator, valCodeGenerator
-# NOTE: All context variables which have a comment readig **tmp** next to them are variables which are present only for testing/debugging purposes, and will not remain in context during production
+# NOTE: All code snipets which have a comment readig **tmp** next to them are code which is present only for testing/debugging purposes, and will not remain in context during production
 
 def initRegistration(request) :
 	'''
@@ -12,8 +12,8 @@ def initRegistration(request) :
 	If user is not authenticated, function checks if the request method is POST; if method is POST, assumes form data is being submitted and takes action to log and mail out activation link.
 	If method is not POST, assumes form has not been completed and renders empty form for the user.
 	'''
-#	if request.user.is_authenticated :  # User is already registered; redirect
-#		return HttpResponseRedirect('/admin/')
+	if request.user.is_authenticated() :  # User is already registered; redirect
+		return HttpResponseRedirect('/admin/')
 	if request.method == 'POST' : # User is submitting form; send out activation link
 		form = InitRegForm(request.POST) # Fill out new form object with data sent via POST method
 		if form.is_valid(): # Use filled form to perform validity check
@@ -22,7 +22,8 @@ def initRegistration(request) :
 								valid_code=valCodeGenerator(), # TODO: write function
 							)
 			regVal.save()
-			regUrl = unicode('/register/') + unicode(regVal.user) + unicode('?valid_code=%s' % regVal.valid_code)
+			host = request.get_host()
+			regUrl = request.get_host() + '/register/' + regVal.user + ('/?valid_code=%s' % regVal.valid_code)
 			email = form.cleaned_data['uname'] + '@poets.whittier.edu'
 			# TODO: Insert function which sends out email, including validation code as GET variable
 			return render_to_response( # R2R page showing email which val code has been sent to
@@ -44,11 +45,14 @@ def initRegistration(request) :
 		form=InitRegForm()
 		return render_to_response(
 								'testing/testBase_initReg.html',
-								{'form':form},
+								{
+									'form':form,
+									'hostname':request.get_host() + '/test/',
+								},
 								context_instance=RequestContext(request),
 							)
 
-def testRegValidator(request, user_slug) :
+def testRegValidator(request, user_slug) : # **tmp**
 	'''
 	This function is for the purpose of testing the mainRegValidator() function
 	'''
@@ -89,13 +93,14 @@ def mainRegistration(request, user_slug) :
 							context_instance=RequestContext(request),
 						)
 
-	if request.user.is_authenticated :  # User is already registered; redirect
+	if request.user.is_authenticated() :  # User is already registered; redirect
 		return HttpResponseRedirect('/admin/')
 	elif request.method == 'POST' : # User is submitting form; send out activation link
+		form = InitRegForm(request.POST) 
 		if form.is_valid(): # Use filled form to perform validity check
 			'''
 			After user creation, Function should perform a redirect to part 3 of registration(or rather profile info page)
-			Include success message somewhere in 3rd registration page
+			Include success message somewhere in 4rd registration page
 			'''
 			user = User.objects.create_user(
 								username=uname, # CRITICAL: uname input not sanitized if not coming from form; this is a potential security risk. Resolve ASAP.
@@ -119,14 +124,22 @@ def mainRegistration(request, user_slug) :
 			return HttpResponseRedirect('/admin/') # redirect to a profile page after successful user creation
 		else : # If form is not valid
 			return render_to_response(
-								'mainReg.html',
-								{ 'form':form},
+								'testing/testBase_mainReg.html',
+								{ 
+									'form':form,
+									'vcode':request.POST['valid_code'],
+									'uname':uname,
+									},
 								context_instance = RequestContext(request),
 							)
 	else :  # User is not authenticated or submitting form
 			form=MainRegForm()
 			return render_to_response(
-								'mainReg.html',
-								{'form':form}, 
+								'testing/testBase_mainReg.html',
+								{
+									'form':form,
+								 	'vcode':request.GET['valid_code'],
+									'uname':uname,
+								}, 
 								context_instance=RequestContext(request),
 							)	

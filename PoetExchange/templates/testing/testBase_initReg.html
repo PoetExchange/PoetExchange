@@ -7,4 +7,13 @@
 {{ form.uname }}
 <input type="submit" name="sbutton" value="Submit" />
 </form>
+<h5>INFO</h5>
+<p>You are currently
+{% if user.is_authenticated %}<span style="color:green">authenticated</span>
+{% else %}<span style="color:red">not authenticated</span>
+{% endif %}</p>
+<p>You are under username:<br />
+{{ user }}</p>
+<p>The hostname is:<br />
+{{ hostname }}</p>
 {% endblock content %}

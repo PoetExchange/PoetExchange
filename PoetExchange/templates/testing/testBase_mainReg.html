@@ -1,0 +1,30 @@
+{% extends 'testing/testBase.html' %}
+
+{% block content %}
+<h3>Main Registration Form</h3>
+<form action="" method="post">
+{% csrf_token %}
+	<input type="hidden" name="valid_code" value="{{ vcode }}" />
+	<label for="uname">Username: </label>
+	<input type="text" size="8" name="uname" value="{{ uname }}" readonly="readonly" /><br />
+	<label for="passwd">Password:</label>
+	{{ form.passwd }}<br />
+	<label for="cfpass">Confirm password:</label>
+	{{ form.cfpass }}<br />
+	<label for="fname">First name: </label>
+	{{ form.fname }}<br />
+	<label for="lname">Last name: </label>
+	{{ form.lname }}<br />
+	<p>
+		Phone Number:
+		{{ form.area_code }}
+		{{ form.phone_prefix }}
+		{{ form.phone_suffix }}<br />
+		<label for="residence">Residence: </label>
+		{{ form.residence }}<br />
+		<label for="major">Major(s): </label>
+		{{ form.major }}
+	</p>
+<input type="submit" name="sbutton" value="Register" />
+</form>
+{% endblock content %}
