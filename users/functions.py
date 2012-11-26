@@ -1,4 +1,5 @@
 from users.models import RegValidator
+from random import Random
 
 def mainRegValidator(reqmethod, usr):
 		'''
@@ -11,7 +12,7 @@ def mainRegValidator(reqmethod, usr):
 			vcode = reqmethod['valid_code']
 		except KeyError :
 			return False
-		try:
+		try :
 			valid = RegValidator.objects.get(valid_code=vcode)
 		except RegValidator.DoesNotExist :
 			return False
@@ -23,5 +24,16 @@ def valCodeGenerator() :
 	'''
 	This function is used to generate a random validation code for new user registration. It takes no arguments and checks against the database to ensure the generated code is unique
 	'''
+	# TODO: edit function so each 'digit' can be an alphanumeric character, rather than just numeric
+	unique = False
+	while not unique :
+		rand = Random()
+		vcode = ''
+		for digit in range(6) :
+			vcode += str(rand.randint(0, 9))
+		try :
+			 RegValidator.objects.get(valid_code=vcode)
+		except RegValidator.DoesNotExist :
+			unique = True
 	# NOTE: '123' Is serving as a placeholder code until the function is written
-	return '123'
+	return vcode

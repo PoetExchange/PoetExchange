@@ -1,5 +1,9 @@
 To Do:
 ========
-- Test user registration forms
 - Begin work on comments application [low priority]
 - Finish constructing user/class/professor rating system [low priority]
+- USER REGISTRATION:
+	-> look into displaying "passwords do not match error" from MainRegForm.clean() in the html form, or find way to test cfpass inside of clean_passwd()
+	-> Shorten phone # fields appropriately, tune them to accept digits only
+	-> Make validation code digits alphanumeric
+	-> Write function which send out registration email

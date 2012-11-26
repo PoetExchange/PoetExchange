@@ -1,10 +1,21 @@
 {% extends 'testing/testBase.html' %}
 
 {% block content %}
-<p>Your registration credentials are
+<p>Your form submission is
 {% if valid %}<span style="color:green;">valid</span>
 {% else %}<span style="color:red;">invalid</span>{% endif %}</p>
 <p>User name passed to database:<br />{{ dbuser }}</p>
 <p>Parameters passed to GET:<br />
-valid_code: {{ getdic.valid_code }}</p>
+<ul>
+{% for item in getList %}
+<li>{{ item.0 }}, {{ item.1 }}</li>
+{% endfor %}
+</ul>
+</p>
+<p>Parameters passed to POST:<br />
+<ul>
+{% for item in postList %}
+<li>{{ item.0 }}, {{ item.1 }}</li>
+{% endfor %}
+</ul>
 {% endblock content %}

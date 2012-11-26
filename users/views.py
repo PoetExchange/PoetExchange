@@ -19,7 +19,7 @@ def initRegistration(request) :
 		if form.is_valid(): # Use filled form to perform validity check
 			regVal = RegValidator.objects.create(
 								user=form.cleaned_data['uname'],
-								valid_code=valCodeGenerator(), # TODO: write function
+								valid_code=valCodeGenerator(), 
 							)
 			regVal.save()
 			host = request.get_host()
@@ -30,8 +30,6 @@ def initRegistration(request) :
 								'testing/testBase_initSubmit.html', 
 								{
 									'email':email,
-									'uname':form.cleaned_data['uname'],# **tmp**
-									'regUrl':regUrl,# **tmp**
 								},
 								context_instance=RequestContext(request),
 							)
@@ -52,34 +50,12 @@ def initRegistration(request) :
 								context_instance=RequestContext(request),
 							)
 
-def testRegValidator(request, user_slug) : # **tmp**
-	'''
-	This function is for the purpose of testing the mainRegValidator() function
-	'''
-	uname = user_slug
-	valid = mainRegValidator(request.GET, uname)
-	getList = []
-	for item in request.GET :
-		getList.append([item, request.GET[item]])
-	return render_to_response(
-								'testing/testBase_regVal.html', 
-								{ 
-									'valid':valid, 
-									'list':getList,
-									'dbuser':uname, 
-									'getdic':request.GET,
-								},
-								context_instance=RequestContext(request),
-							)
-	
-
 def mainRegistration(request, user_slug) :
 	'''
 	Runs all the same checks as initRegistration function;
 	Creates new user if form is submitted and valid
 	'''
 	uname = user_slug
-	# TODO: Find way for form to resubmit to itself while sending validation code -- UPDATE: Best potential solution would seem to be to send  as POST data passed in  hidden, prepopulated fields on form
 	if request.method != 'POST' :
 		if not mainRegValidator(request.GET, uname) :
 			return render_to_response( # Error page stating registration request does not exist
@@ -96,21 +72,19 @@ def mainRegistration(request, user_slug) :
 	if request.user.is_authenticated() :  # User is already registered; redirect
 		return HttpResponseRedirect('/admin/')
 	elif request.method == 'POST' : # User is submitting form; send out activation link
-		form = InitRegForm(request.POST) 
+		form = MainRegForm(request.POST) 
 		if form.is_valid(): # Use filled form to perform validity check
 			'''
 			After user creation, Function should perform a redirect to part 3 of registration(or rather profile info page)
 			Include success message somewhere in 4rd registration page
 			'''
 			user = User.objects.create_user(
-								username=uname, # CRITICAL: uname input not sanitized if not coming from form; this is a potential security risk. Resolve ASAP.
 								password=form.cleaned_data['passwd'],
 								email=uname + unicode('@poets.whittier.edu'),
 							)
 			user.save()
 			siteUser = SiteUser.objects.create(
 								user = user,
-									# NOTE: use JS validation to ensure all 3 phone fields are filled if any of them are filled
 								area_code = form.cleaned_data['area_code'],
 								phone_prefix = form.cleaned_data['phone_prefix'],
 								phone_suffix = form.cleaned_data['phone_suffix'],
@@ -132,7 +106,7 @@ def mainRegistration(request, user_slug) :
 									},
 								context_instance = RequestContext(request),
 							)
-	else :  # User is not authenticated or submitting form
+	else :  # User is not authenticated or submitting form; render blank form
 			form=MainRegForm()
 			return render_to_response(
 								'testing/testBase_mainReg.html',

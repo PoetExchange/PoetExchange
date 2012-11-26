@@ -29,8 +29,9 @@ class MainRegForm(forms.ModelForm) :
 	class Meta :
 		model = SiteUser
 		exclude = ('user',)
-	def clean():
-		passwd = self.cleaned_date['passwd']
+	def clean(self):
+		passwd = self.cleaned_data['passwd']
 		cfpass = self.cleaned_data['cfpass']
 		if passwd != cfpass :
 			raise forms.ValidationError('Passwords do not match. Please try again.')
+		return self.cleaned_data
