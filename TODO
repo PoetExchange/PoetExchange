@@ -7,3 +7,6 @@ To Do:
 	-> Shorten phone # fields appropriately, tune them to accept digits only
 	-> Make validation code digits alphanumeric
 	-> Write function which send out registration email
+- Make design decision regarding ExtrCurProfile form
+- Figure out how to set form fields as blank=True equivalent
+- Work out JS validation algorithms

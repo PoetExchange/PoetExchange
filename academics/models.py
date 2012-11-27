@@ -105,7 +105,8 @@ class Professor(models.Model) :
 	def __unicode__(self) :
 		return self.last_name
 	def save(self, *args, **kwargs) :
-		self.unique_key = self.last_name + self.department
+		self.unique_key = self.last_name + self.department.dept_abrv
+		super(Professor, self).save(*args, **kwargs)
 
 class AcademicClassProfile(models.Model) :
 	ac_class			= models.ForeignKey('AcademicClass')

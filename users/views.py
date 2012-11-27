@@ -4,6 +4,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from users.forms import *
 from users.models import RegValidator, SiteUser
 from users.functions import mainRegValidator, valCodeGenerator
+from django.contrib.auth import authenticate, login
 # NOTE: All code snipets which have a comment readig **tmp** next to them are code which is present only for testing/debugging purposes, and will not remain in context during production
 
 def initRegistration(request) :
@@ -116,4 +117,33 @@ def mainRegistration(request, user_slug) :
 									'uname':uname,
 								}, 
 								context_instance=RequestContext(request),
-							)	
+							)
+
+def loginRequest(request) :
+	if request.user.is_authenticated() : # User is already logged in, redirect
+		return HttpResponseRedirect('/admin/')
+	elif request.method == 'POST' : # User is requesting authentication
+		form = LoginForm(request.POST)
+		if form.is_valid :
+			uname = form.cleaned_data['uname']
+			passwd = form.cleaned_data['passwd']
+			authUser = authenticate(username=uname, password=passwd)
+			if authUser is not None :
+				login(request, user)
+				return HttpResponseRedirect('/admin/')
+			else :
+				return render_to_response(
+									'login.html', 
+									{ 'form':form, },
+									context_instance=RequestContext(request)
+	else : # User is not logged in or requesting authentication; render blank form
+		form = LoginForm()
+		return render_to_response(
+								'login.html',
+								{ 'form':form },
+								context_instance=RequestContext(request),
+							)
+
+def logoutRequest(request) :
+	logout(request)
+	return HttpResponseRedirect('/')
