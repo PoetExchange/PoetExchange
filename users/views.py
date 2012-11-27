@@ -31,6 +31,8 @@ def initRegistration(request) :
 								'testing/testBase_initSubmit.html', 
 								{
 									'email':email,
+									'uname':regVal.user,#**tmp**
+									'regUrl':regUrl,#**tmp**
 								},
 								context_instance=RequestContext(request),
 							)
@@ -136,6 +138,7 @@ def loginRequest(request) :
 									'login.html', 
 									{ 'form':form, },
 									context_instance=RequestContext(request)
+								)
 	else : # User is not logged in or requesting authentication; render blank form
 		form = LoginForm()
 		return render_to_response(

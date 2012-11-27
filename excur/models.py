@@ -186,17 +186,17 @@ class SocietyProfile(models.Model) :
 
 class SportProfile(models.Model) :
 	sport				= models.ForeignKey('Sport')
-	semester			= models.ForeignKey('objects.Semester')
+	year				= models.IntegerField(max_length=4)
 	unique_key			= models.IntegerField(
-									max_length=8,
+									max_length=10,
 									editable=False,
 									unique=True,
 								)
 	def __unicode__(self) :
-		value = "%s %s" % (self.group, self.semester)
+		value = "%s %s" % (self.group, self.year)
 		return value
 	def save(self, *args, **kwargs) :
-		self.unique_key = int("%d%d" % (self.group.pk, self.semester.pk))
+		self.unique_key = int("%d%d" % (self.group.pk, self.year))
 		super(SportProfile, self).save(*args, **kwargs)
 
 class ExtrCurOfficer(models.Model) :

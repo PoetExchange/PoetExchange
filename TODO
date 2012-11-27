@@ -3,10 +3,7 @@ To Do:
 - Begin work on comments application [low priority]
 - Finish constructing user/class/professor rating system [low priority]
 - USER REGISTRATION:
-	-> look into displaying "passwords do not match error" from MainRegForm.clean() in the html form, or find way to test cfpass inside of clean_passwd()
-	-> Shorten phone # fields appropriately, tune them to accept digits only
-	-> Make validation code digits alphanumeric
+	-> Shorten phone # fields appropriately, tune them to accept digits only [frontend work]
+	-> Make validation code digits alphanumeric [low priority]
 	-> Write function which send out registration email
-- Make design decision regarding ExtrCurProfile form
-- Figure out how to set form fields as blank=True equivalent
 - Work out JS validation algorithms

@@ -46,4 +46,7 @@ class ActivitiesProfileForm(forms.ModelForm) :
 
 class LoginForm(forms.Form) :
 	uname = forms.CharField(max_length=8, label=(u'Username:'))
-	passwd = forms.CharField(label=(u'Password:')), widget=forms.PasswordInput()
+	passwd = forms.CharField(
+					label=(u'Password:'), 
+					widget=forms.PasswordInput(),
+				)
