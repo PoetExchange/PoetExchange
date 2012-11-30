@@ -6,6 +6,7 @@
 {% csrf_token %}
 	<p class="error">{% if form.errors %}
 	Please fix the following errors:<br />
+	{{ form.errors }}
 	{{ form.non_field_errors }}
 	{% endif %}</p>
 	<input type="hidden" name="valid_code" value="{{ vcode }}" />

@@ -82,8 +82,9 @@ def mainRegistration(request, user_slug) :
 			Include success message somewhere in 4rd registration page
 			'''
 			user = User.objects.create_user(
+								username= uname,
 								password=form.cleaned_data['passwd'],
-								email=uname + unicode('@poets.whittier.edu'),
+								email=uname + '@poets.whittier.edu',
 							)
 			user.save()
 			siteUser = SiteUser.objects.create(
@@ -92,11 +93,12 @@ def mainRegistration(request, user_slug) :
 								phone_prefix = form.cleaned_data['phone_prefix'],
 								phone_suffix = form.cleaned_data['phone_suffix'],
 								residence = form.cleaned_data['residence'],
-								major = form.cleaned_data['major'],
 								user_photo = form.cleaned_data['user_photo'],
 							)
 			siteUser.save()
-			valid = RegValidator.objects.get(valid_code = request.POST['valid'])
+			for major in form.cleaned_data['major'] :
+				siteUser.major.add(major)
+			valid = RegValidator.objects.get(valid_code = request.POST['valid_code'])
 			valid.delete() # Delete validation code when registration complete
 			return HttpResponseRedirect('/admin/') # redirect to a profile page after successful user creation
 		else : # If form is not valid

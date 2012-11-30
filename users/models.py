@@ -33,8 +33,10 @@ class SiteUser(models.Model) :
 											max_length=4,
 											blank=True, null=True,
 										)
-	residence           = models.ForeignKey('objects.CampusArea')
-	major               = models.ManyToManyField(
+	residence          	= models.ForeignKey('objects.CampusArea',
+											blank=True, null=True
+										)
+	major				= models.ManyToManyField(
                                             'academics.AcademicDepartment',
                                             blank=True, null=True,
 										)

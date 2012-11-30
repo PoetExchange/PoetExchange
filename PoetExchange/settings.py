@@ -3,6 +3,7 @@ import os
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 projectDir = os.path.realpath(os.path.dirname(__file__)) + '/'
+os.environ['LANG'] = 'en_US.UTF-8' # Fix locale error
 
 AUTH_PROFILE_MODULE = 'users.SiteUser'
 

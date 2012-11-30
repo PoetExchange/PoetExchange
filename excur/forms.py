@@ -38,7 +38,7 @@ class ExtraCurricularForm(forms.ModelForm) :
 			model = Sport
 
 class ExtrCurProfileForm(forms.ModelForm) :
-#NOTE: Form is being manually constructed by combining fields of the three different profile Construct all varying fields in different formsets, similar fields in the same formset.
+#NOTE: Form is being manually constructed by combining fields of the three different profile Construct all varying fields in different formsets, similar fields in the same formset-- can use HTML <fieldset> tag in templates
 	group_type			= forms.CharField(
 									max_length=2,
 									choices=(

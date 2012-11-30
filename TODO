@@ -2,8 +2,11 @@ To Do:
 ========
 - Begin work on comments application [low priority]
 - Finish constructing user/class/professor rating system [low priority]
-- USER REGISTRATION:
-	-> Shorten phone # fields appropriately, tune them to accept digits only [frontend work]
+- FORMS:
+	-> Shorten phone # fields appropriately, tune them to accept digits only [frontend work in form API]
+	-> Work out JS validation algorithms
+- REMAINING BACKEND
+	-> Write resume autogeneration app [end priority]
+	-> Add profile control application which provides user ability to control info displayed in profile [low priority]
+	-> Write function which send out registration email [end priority]
 	-> Make validation code digits alphanumeric [low priority]
-	-> Write function which send out registration email
-- Work out JS validation algorithms
