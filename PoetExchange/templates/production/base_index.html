@@ -1,0 +1,41 @@
+{% extends 'production/base.html' %}
+{% load filter_extras %}
+
+{% block headext %}
+<link rel="stylesheet" type="text/css" href="/static/css/style-index.css" />
+{% endblock headext %}
+		
+{% block content %}
+<div id="content-main">
+<div id="dept-container">
+		{% for dept in acDepts %}
+		<div class="dept-block">
+			<div class="block-head"><a href="{% url academics.views.deptDetail dept.dept_abrv %}">{{ dept.dept_abrv }}</a></div><!--block-head-->
+				{% for book in  books|lookup:dept.dept_abrv %}
+				<div class="block-book">{{ book }}</div><!--block-book-->
+				<div class="hrule"></div><!--hrule-->
+				{% endfor %}
+		</div><!--dept-block-->
+		{% endfor %}
+	</div><!--dept-container-->
+</div><!--content-main-->
+{% endblock content %}
+<div id="widget-container">
+{% block widget1 %}
+<div class="widget-box">
+	<span class="gold">Latest book postings!</span>
+</div><!--widget-box-->
+{% endblock widget1 %}
+
+{% block widget2 %}
+<div class="widget-box">
+	<span class="gold">Site news listings!</span>
+</div><!--widget-box-->
+{% endblock widget2 %}
+
+{% block widget3 %}
+<div class="widget-box">
+	<span class="gold">Campus news!</span>
+</div><!--widget-box-->
+{% endblock widget3 %}
+</div><!--widget-container-->

@@ -1,0 +1,137 @@
+@font-face {
+	font-family: 'OpenSans';
+	font-style: normal;
+	font-weight: normal;
+	src: url('/static/fonts/OpenSans-Regular.ttf');
+}
+
+@font-face {
+	font-family: 'OpenSans';
+	font-style: normal;
+	font-weight: 800;
+	src: url('/static/fonts/OpenSans-ExtraBold.ttf');
+}
+
+.gold {
+	color: #F6FF00;
+	font-weight: bold;
+}
+
+#page-container {
+	min-width:1000px;
+	margin-top:0;
+}
+
+#header {
+	position: relative;
+	min-width: 1000px;
+	height: 100px;
+	margin-left:auto; 
+	margin-right:auto;
+	background:purple;
+	text-align: center;
+}
+
+#title-container {
+	position: relative;
+	top: 15px;
+	margin: 0 auto;
+	width: 450px;
+}
+
+#PoetExchange {
+	position: relative;
+	margin: 0 auto;
+	padding: 0;
+	width:350px; 
+	color:white; 
+	font-size:40px; 
+	font-family: 'Open Sans', sans-serif; 
+	font-weight:800
+}
+
+#tagLine {
+	position: absolute;
+	left: 250px;
+	top: 35px; /* Create Opera specific stylesheeet containing separate value */
+	color:#F6FF00; 
+	z-index: 10;
+	font-family: 'Open Sans', sans-serif; 
+	font-weight:400;
+}
+
+body {
+	margin:0;
+}
+
+#login {
+	text-align: right;
+	font-size: 10px;
+	color: white;
+	position: absolute; 
+	right: 10px;
+	top:10px;
+	font-family: 'OpenSans', sans-serif;
+}
+
+#login a {
+	color: white;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+#login form {
+	text-align: right;
+	margin-bottom: 0px;
+}
+
+#login a:hover {
+	text-decoration: underline;
+}
+
+#navigation {
+	margin: 10px auto;
+	width: 40px;
+	z-index:10;
+}
+
+#content-main {
+	position: relative;
+	margin-left:auto; 
+	margin-right:auto; 
+	background:#CD00E8; 
+	border:3px solid purple; 
+	min-height:300px; 
+	max-width: 900px;
+
+}
+
+#widget-container {
+	margin: 30px auto;
+	width: 768px;
+}
+
+.widget-box {
+	text-align: center;
+	float: left;
+	background:purple; 
+	width:150px; 
+	height:150px;
+	border:3px solid #CD00E8;
+	margin: 0 50px;
+	font-family: 'OpenSans', sans-serif;
+}
+
+
+/*
+Block Elements (div, p, h1, images...) can be positioned with absolute, relative, margin, padding whateva
+
+inline elements (span...) are text--in line with text--and can NOT. 
+
+
+Inline/block test: fill it with a background color and it takes up the whole width of the page/ container, it is a block element. If the background only fills up the text, it is an inline element.
+
+margin:0,1,4,2 top, right, bottom, left
+
+margin:0, auto   first # is top AND bottom. 2nd is left AND right. 
+*/

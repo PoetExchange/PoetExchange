@@ -1,0 +1,101 @@
+@font-face {
+	font-family: 'Rambla';
+	font-style: normal; /*not italic*/
+	font-weight: normal; /*not bold*/
+	src: url('/static/fonts/Rambla-Regular.ttf');
+}
+
+@font-face {
+	font-family: 'Rambla';
+	font-style: normal;
+	font-weight: bold;
+	src: url('/static/fonts/Rambla-Bold.ttf');
+}
+
+@font-face {
+    font-family:'Cabin';
+    font-style: normal;
+    font-weight: normal;
+    src: url('/static/fonts/Cabin-Regular.ttf');
+}
+
+@font-face {
+    font-family:'Cabin';
+    font-style: normal;
+    font-weight: bold;
+    src: url('/static/fonts/Cabin-Bold.ttf');
+}
+
+@font-face {
+    font-family:'Cabin';
+    font-style: italic;
+    font-weight: normal;
+    src: url('/static/fonts/Cabin-Italic.ttf');
+}
+
+@font-face {
+    font-family:'Cabin';
+    font-style: italic;
+    font-weight: bold;
+    src: url('/static/fonts/Cabin-BoldItalic.ttf');
+}
+
+
+#content-main {
+	overflow: hidden;
+}
+
+.dept-block { 
+	font-family: 'Cabin', sans-serif;
+	font-size: 12px;
+	margin: 6px 6px;
+	width: 200px;
+	height: 200px;
+	border: 1px dotted white;
+	float: left;
+	padding: 1px 5px;
+	overflow-y: auto;
+}
+
+.dept-block a {
+	text-decoration: none;
+}	
+
+.dept-block a:hover {
+	text-decoration: underline;
+}
+
+.block-head {
+	color: gold;
+	font-family: 'Rambla', sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	text-align: left;
+	margin-left: 0;
+	border-right: solid 1px white;
+	border-bottom: solid 1px white;
+	width: 50px;
+}
+
+.block-head a {
+	color: gold;
+}
+
+.block-book {
+	margin: 10px 2px;
+}
+
+.hrule {
+	height: 1px;
+	width: 80%;
+	background-color: white;
+	margin: 5px;
+}	
+
+#dept-container {
+	max-width: 900px;
+	overflow: hidden;
+	margin: 0 auto;
+/*	border-right: solid 1px black;
+	border-left: solid 1px black;*/
+}

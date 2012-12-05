@@ -1,0 +1,82 @@
+@font-face {
+    font-family: 'Rambla';
+    font-style: normal; /*not italic*/
+    font-weight: normal; /*not bold*/
+    src: url('/static/fonts/Rambla-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Rambla';
+    font-style: normal;
+    font-weight: bold;
+    src: url('/static/fonts/Rambla-Bold.ttf');
+}
+
+@font-face {
+	font-family:'Cabin';
+	font-style: normal;
+	font-weight: normal;
+	src: url('/static/fonts/Cabin-Regular.ttf');
+}
+
+@font-face {
+	font-family:'Cabin';
+	font-style: normal;
+	font-weight: bold;
+	src: url('/static/fonts/Cabin-Bold.ttf');
+}
+
+@font-face {
+	font-family:'Cabin';
+	font-style: italic;
+	font-weight: normal;
+	src: url('/static/fonts/Cabin-Italic.ttf');
+}
+
+@font-face {
+	font-family:'Cabin';
+	font-style: italic;
+	font-weight: bold;
+	src: url('/static/fonts/Cabin-BoldItalic.ttf');
+}
+
+#dept-container {
+	position: relative;
+	max-width: 1000px;
+	margin: 0 auto;
+	border: 1px dotted black;
+}
+
+#title {
+	color: gold;
+	background: purple;
+	font-family: 'Rambla', sans-serif;
+	text-align: center;
+	max-width: 1000px;
+	margin: 0 auto;
+}
+
+#class-block {
+	font-family: 'Cabin', sans-serif;;
+	background-color: #CD00E8;
+	border: 3px solid purple;
+	overflow-y: auto;
+	width: 610px;
+	height: 400px;
+	margin: 5px 5px;
+	float: left;
+}
+
+.course-number {
+	font-weight: bold;
+}
+
+#faculty-block {
+	font-family: 'Cabin', sans-serif;
+	background-color: #CD00E8;
+	border: 3px solid purple;
+	overflow-y: auto;
+	width:365px;
+	height: 400px;
+	margin-top: 5px;
+}
