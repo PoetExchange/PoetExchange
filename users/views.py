@@ -6,6 +6,7 @@ from users.models import RegValidator, SiteUser
 from users.functions import mainRegValidator, valCodeGenerator
 from objects.functions import whoAmI
 from django.contrib.auth import authenticate, login, logout
+from django.core.mail import EmailMessage
 # NOTE: All code snipets which have a comment readig **tmp** next to them are code which is present only for testing/debugging purposes, and will not remain in context during production
 
 def initRegistration(request) :
@@ -30,6 +31,8 @@ def initRegistration(request) :
 			host = request.get_host()
 			regUrl = request.get_host() + '/register/' + regVal.user + ('/?valid_code=%s' % regVal.valid_code)
 			email = form.cleaned_data['uname'] + '@poets.whittier.edu'
+			send_email = EmailMessage('Activation Link',regUrl,to =[email])#Sending the activation link to the user
+			send_email.send()
 			# TODO: Insert function which sends out email, including validation code as GET variable
 			return render_to_response( # R2R page showing email which val code has been sent to
 								'testing/testBase_initSubmit.html', 
