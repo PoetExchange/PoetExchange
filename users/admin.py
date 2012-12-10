@@ -4,7 +4,7 @@ from django.contrib import admin
 
 class userList(admin.ModelAdmin):
 	#You can add more attributes in the list_display if you've modified some of them.
-	list_display = ('user','area_code','phone_prefix','phone_suffix','residence')
+	list_display = ('user','area_code','phone_prefix','phone_suffix','residence','user_photo')
 
 admin.site.register(SiteUser,userList)
 admin.site.register(ActivitiesProfile)

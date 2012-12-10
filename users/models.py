@@ -41,7 +41,7 @@ class SiteUser(models.Model) :
                                             blank=True, null=True,
 										)
 	user_photo			= models.ImageField(blank=True, null=True,
-											upload_to='/tmp',)
+											upload_to='tmp/',)
 	user_slug			= models.SlugField(editable=False)
 	def __unicode__(self) :
 		return self.user.username
@@ -62,6 +62,7 @@ class RegValidator(models.Model) :
 											max_length=10,
 											unique=True,
 										)
+
 	user				= models.CharField(
 											max_length=8,
 											unique=True,
