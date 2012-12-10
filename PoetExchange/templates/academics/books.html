@@ -1,9 +1,0 @@
-{% if book_list %}
-    <ul>
-    {% for book in book_list %}
-        <li><a href="/index/books/{{ book.id }}/">{{ book.book_title }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}

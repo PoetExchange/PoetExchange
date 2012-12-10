@@ -1,8 +1,8 @@
 import os
+from localenv import envDir
 # Django settings for PoetExchange project.
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-projectDir = os.path.realpath(os.path.dirname(__file__)) + '/'
 os.environ['LANG'] = 'en_US.UTF-8' # Fix locale error
 
 AUTH_PROFILE_MODULE = 'users.SiteUser'
@@ -16,7 +16,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '%sdev_files/data.db' % projectDir,
+        'NAME': '%s/PoetExchange/dev_files/data.db' % envDir,
         # The following settings are not used with sqlite3:
         'USER': '',
         'PASSWORD': '',
@@ -66,7 +66,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT = envDir + 'PoetExchange/static_root/'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -74,7 +74,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-#	'/home/zaw/Documents/PoetExchange/PoetExchange/templates/objects'
+	envDir + 'PoetExchange/static_files/',
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -98,6 +98,17 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+	"PoetExchange.context_processors.uagent",
+	"django.contrib.auth.context_processors.auth",
+	"django.core.context_processors.debug",
+	"django.core.context_processors.i18n",
+	"django.core.context_processors.media",
+	"django.core.context_processors.static",
+	"django.core.context_processors.tz",
+	"django.contrib.messages.context_processors.messages",
+)
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -114,7 +125,7 @@ ROOT_URLCONF = 'PoetExchange.urls'
 WSGI_APPLICATION = 'PoetExchange.wsgi.application'
 
 TEMPLATE_DIRS = (
-	projectDir + 'templates/',
+	envDir + 'PoetExchange/templates/',
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.

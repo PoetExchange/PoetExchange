@@ -20,6 +20,11 @@ class Book(models.Model) :
 	book_title			= models.CharField(max_length=250)
 	book_author			= models.CharField(max_length=250)
 	book_class			= models.ForeignKey('AcademicClass')
+	book_dept			= models.ForeignKey(
+											'AcademicDepartment',
+											null=True, 
+											editable=False,
+										)
 	book_price			= models.IntegerField(max_length=3)
 	book_condition		= models.CharField(
 											max_length=2,
@@ -38,13 +43,14 @@ class Book(models.Model) :
 											)
 	entry_date			= models.DateTimeField(auto_now=True,)
 	user_class_key		= models.IntegerField(editable=False,)
-	book_slug			= models.SlugField(editable=False,)
+	book_slug			= models.SlugField(editable=False, null=True)
 	def __unicode__(self) :
 		return self.book_title
 	def save(self,*args,**kwargs) :
-		if not self.id :
-			self.book_slug = self.pk
 		self.user_class_key = self.book_seller.pk + self.book_class.pk
+		self.book_dept = self.book_class.class_dept
+		super(Book, self).save(*args, **kwargs)
+		self.book_slug = self.pk
 		super(Book, self).save(*args, **kwargs)
 
 class AcademicClass(models.Model) :
@@ -86,8 +92,7 @@ class AcademicDepartment(models.Model) :
 	def __unicode__(self) :
 		return self.dept_abrv
 	def save(self, *args, **kwargs) :
-		if not self.id :
-			dept_slug = slugify(self.dept_abrv)
+		dept_slug = slugify(self.dept_abrv)
 		super(AcademicDepartment, self).save(*args, **kwargs)
 
 class Professor(models.Model) :

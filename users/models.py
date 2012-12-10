@@ -62,9 +62,11 @@ class RegValidator(models.Model) :
 											max_length=10,
 											unique=True,
 										)
-	user				= models.CharField(max_length=8,
-						unique=True,
-					)
+
+	user				= models.CharField(
+											max_length=8,
+											unique=True,
+										)
 
 class ActivitiesProfile(models.Model) :
 	user				= models.ForeignKey('SiteUser')

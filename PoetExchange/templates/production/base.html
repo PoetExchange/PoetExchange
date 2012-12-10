@@ -1,0 +1,69 @@
+<!DOCTYPE Html PUBLIC>
+<html lang='en'>
+<head>
+	<title>Poet Exchange</title>
+	<link rel="stylesheet" href="/static/css/style-default.css" type="text/css" media="screen" />
+	{% if uagent.opera %}
+	<link rel="stylesheet" href="/static/css/style-default_opera.css" type="text/css" media="screen" />
+	{% endif %}
+	<link rel="shortcut icon" href="7.gif"><link rel="shortcut icon" href="7.gif">
+	{% block headext %}{% endblock headext %}
+</head>
+<body>
+<div id="page-container">
+	<div id="header">
+		<div id="title-container">
+			<h1 id="PoetExchange">PoetExchange</h1>
+			<h4 id="tagLine">By the Poet, for the Poet</h4>
+		</div><!--title-container-->
+		{% block login %}
+		<div id="login">
+			{% if user.is_authenticated %}
+			<span>Welcome, {{ user.first_name }}!</span><br />
+			<a href="{% url users.views.logoutRequest %}">Logout</a>
+			{% else %}
+			<form method="post" action="/login/">
+			{% csrf_token %}
+				<input type="text" placeholder="Username" size="8" name="uname"><br>
+				<input type="password" placeholder="Password" size="8" name="passwd"><br>
+				<input type="submit" name="submit" value="login" id="login-button"><br />
+				<a href="{% url users.views.initRegistration %}">Register</a>
+			</form>
+			{% endif %}
+		</div><!--login-->
+		{% endblock login %}
+	</div><!--header-->
+	<div id="navigation">
+	{% block navigation %}
+		<select>
+			<option>Buy</option>
+			<option>Sell</option>
+		</select>
+	{% endblock navigation%}
+	</div><!--navigation-->
+		{% block content %}
+		<div id="content-main">
+			<br><br><span class="gold">Main content box</span>
+		</div><!--content-main-->
+		{% endblock content %}
+	<div id="widget-container">
+		{% block widget1 %}
+		<div class="widget-box">
+			<br><br><span class="gold">Widget box 1</span>
+		</div><!--widget-box-->
+		{% endblock widget1 %}
+		{% block widget2 %}
+		<div class="widget-box"><br><br>
+			
+			<span class="gold">Widget box 2</span>
+		</div><!--widget-box-->
+		{% endblock widget2 %}
+		{% block widget3 %}
+		<div class="widget-box">
+			<br><br><span class="gold">Widget box 3</span>
+		</div><!--widget-box-->
+		{% endblock widget3 %}
+	</div><!--widget-container-->
+</div><!--page-container-->
+</body>
+</html>

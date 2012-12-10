@@ -4,7 +4,8 @@ from django.shortcuts import render_to_response, get_object_or_404
 from users.forms import *
 from users.models import RegValidator, SiteUser
 from users.functions import mainRegValidator, valCodeGenerator
-from django.contrib.auth import authenticate, login
+from objects.functions import whoAmI
+from django.contrib.auth import authenticate, login, logout
 from django.core.mail import EmailMessage
 # NOTE: All code snipets which have a comment readig **tmp** next to them are code which is present only for testing/debugging purposes, and will not remain in context during production
 
@@ -19,6 +20,9 @@ def initRegistration(request) :
 	if request.method == 'POST' : # User is submitting form; send out activation link
 		form = InitRegForm(request.POST) # Fill out new form object with data sent via POST method
 		if form.is_valid(): # Use filled form to perform validity check
+			oldVal = RegValidator.objects.filter(user=form.cleaned_date['uname'])
+			if oldVal :
+				oldVal.delete()
 			regVal = RegValidator.objects.create(
 								user=form.cleaned_data['uname'],
 								valid_code=valCodeGenerator(), 
@@ -42,7 +46,9 @@ def initRegistration(request) :
 		else :  # Return user to form with errors if not valid
 			return render_to_response(
 								'testing/testBase_initReg.html', 
-								{ 'form':form}, 
+								{ 
+									'form':form,
+								}, 
 								context_instance = RequestContext(request),
 							)
 	else :  # User is not registered and not submitting; render blank form
@@ -64,12 +70,16 @@ def mainRegistration(request, user_slug) :
 	uname = user_slug
 	if request.method != 'POST' :
 		if not mainRegValidator(request.GET, uname) :
+			context = {
+					}
 			return render_to_response( # Error page stating registration request does not exist
 							'ERROR.html',
 							context_instance=RequestContext(request),
 						)
 	else : # If request method is POST
 		if not mainRegValidator(request.POST, uname) :
+			context = {
+					}
 			return render_to_response(
 							'ERROR.html',
 							context_instance=RequestContext(request),
@@ -131,24 +141,28 @@ def loginRequest(request) :
 		return HttpResponseRedirect('/admin/')
 	elif request.method == 'POST' : # User is requesting authentication
 		form = LoginForm(request.POST)
-		if form.is_valid :
+		if form.is_valid() :
 			uname = form.cleaned_data['uname']
 			passwd = form.cleaned_data['passwd']
 			authUser = authenticate(username=uname, password=passwd)
 			if authUser is not None :
-				login(request, user)
+				login(request, authUser)
 				return HttpResponseRedirect('/admin/')
 			else :
 				return render_to_response(
 									'login.html', 
-									{ 'form':form, },
+									{ 
+										'form':form, 
+									},
 									context_instance=RequestContext(request)
 								)
 	else : # User is not logged in or requesting authentication; render blank form
 		form = LoginForm()
 		return render_to_response(
 								'login.html',
-								{ 'form':form },
+								{ 
+									'form':form,
+								},
 								context_instance=RequestContext(request),
 							)
 

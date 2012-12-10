@@ -1,0 +1,38 @@
+{% extends 'production/base.html' %}
+
+{% block headext %}
+<link rel="stylesheet" type="text/css" href="/static/css/style-deptDetail.css" />
+{% endblock headext %}
+
+{% block navigation %}{% endblock navigation %}
+
+{% block content %}
+<div id='dept-container'>
+	<h2 id="title">{{ dept.dept_name }}</h2>
+	<div id="class-block">
+		<ul id="course-list">
+			{% for course in classes %}
+			<li class="course-item">
+				<span class="course-number">{{ course.class_dept.dept_abrv }}.{{ course.class_number }}</span>&nbsp;&nbsp;
+				<span class="course-title">{{ course.class_name }}</span>
+			</li>
+			{% endfor %}
+		</ul>
+	</div><!--class-block-->
+	<div id="faculty-block">
+		<ul id="faculty-list">
+			{% for prof in dept.professor_set.all %}
+			<li>
+				{{ prof.last_name }}
+				{% if prof.first_name %}, 
+				{{ prof.first_name }}
+				{% endif %}
+			</li>
+			{% endfor %}
+		<ul>
+</div><!--dept-container-->
+{% endblock content %}
+
+{% block widget1 %}{% endblock widget1 %}
+{% block widget2 %}{% endblock widget2 %}
+{% block widget3 %}{% endblock widget3 %}

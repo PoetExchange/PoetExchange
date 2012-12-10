@@ -1,4 +1,5 @@
 {% extends "testing/testBase.html" %}
+{% load filter_extras %}
 
 {% block content %}
 <form action="" method="post">
@@ -12,8 +13,13 @@
 {% if user.is_authenticated %}<span style="color:green">authenticated</span>
 {% else %}<span style="color:red">not authenticated</span>
 {% endif %}</p>
-<p>You are under username:<br />
-{{ user }}</p>
+<p>You match the following browsers:<br />
+{% for browser in uagent %}
+{% if uagent|lookup:browser %}
+{{ browser }}<br />
+{% endif %}
+{% endfor %}
+</p>
 <p>The hostname is:<br />
 {{ hostname }}</p>
 {% endblock content %}
