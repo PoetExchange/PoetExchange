@@ -54,6 +54,10 @@
 	border: 1px dotted white;
 	float: left;
 	padding: 1px 5px;
+	overflow: hidden;
+}
+
+.dept-block:hover {
 	overflow-y: auto;
 }
 

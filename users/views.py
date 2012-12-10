@@ -20,7 +20,7 @@ def initRegistration(request) :
 	if request.method == 'POST' : # User is submitting form; send out activation link
 		form = InitRegForm(request.POST) # Fill out new form object with data sent via POST method
 		if form.is_valid(): # Use filled form to perform validity check
-			oldVal = RegValidator.objects.filter(user=form.cleaned_date['uname'])
+			oldVal = RegValidator.objects.filter(user=form.cleaned_data['uname'])
 			if oldVal :
 				oldVal.delete()
 			regVal = RegValidator.objects.create(
@@ -29,10 +29,10 @@ def initRegistration(request) :
 							)
 			regVal.save()
 			host = request.get_host()
-			regUrl = request.get_host() + '/register/' + regVal.user + ('/?valid_code=%s' % regVal.valid_code)
+			regUrl = request.get_host() + '/user/register/' + regVal.user + ('/?valid_code=%s' % regVal.valid_code)
 			email = form.cleaned_data['uname'] + '@poets.whittier.edu'
-			send_email = EmailMessage('Activation Link',regUrl,to =[email])#Sending the activation link to the user
-			send_email.send()
+#			send_email = EmailMessage('Activation Link',regUrl,to =[email])#Sending the activation link to the user
+#			send_email.send()
 			# TODO: Insert function which sends out email, including validation code as GET variable
 			return render_to_response( # R2R page showing email which val code has been sent to
 								'testing/testBase_initSubmit.html', 
