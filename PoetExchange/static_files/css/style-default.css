@@ -94,7 +94,7 @@ body {
 	width:90%;
 	z-index:10;
 	text-align: center;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'OpenSans', sans-serif;
 }
 
 #navigation a {
@@ -149,7 +149,6 @@ body {
 	background: purple;
 	text-align: center;
 }
-
 .header-skin2 {
 	background-color: #8000C8
 }
