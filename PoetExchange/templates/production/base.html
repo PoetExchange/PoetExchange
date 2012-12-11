@@ -33,19 +33,16 @@
 		</div><!--login-->
 		{% endblock login %}
 	</div><!--header-->
-	<div id="navigation">
-	{% block navigation %}
-		<select>
-			<option>Buy</option>
-			<option>Sell</option>
-		</select>
-	{% endblock navigation%}
+	<div id="{% block navId %}navigation{% endblock navId %}">
+		{% block navigation %}
+		 &nbsp; <a href='{% url objects.views.index %}'>Home</a> &nbsp; {% block dept_nav %}{% endblock %}
+		{% endblock navigation%}
 	</div><!--navigation-->
+	<div id="{% block contentId %}content-main{% endblock contentId %}">
 		{% block content %}
-		<div id="content-main">
 			<br><br><span class="gold">Main content box</span>
-		</div><!--content-main-->
 		{% endblock content %}
+		</div><!--content-main-->
 	<div id="widget-container">
 		{% block widget1 %}
 		<div class="widget-box">
@@ -65,5 +62,9 @@
 		{% endblock widget3 %}
 	</div><!--widget-container-->
 </div><!--page-container-->
+<div id='footer'>
+	{% block footer %}
+	{% endblock footer %}
+</div><!--footer-->
 </body>
 </html>

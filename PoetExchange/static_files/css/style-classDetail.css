@@ -1,0 +1,42 @@
+#classDetail-container {
+	min-width: 1000px;
+}
+
+#class-header {
+	text-align: right;
+	padding: 3px;
+}
+
+#class-header h2 {
+	margin: 0;
+	margin-bottom: 5px;
+}
+
+#classDetail-container {
+	width: 90%;
+	margin: 0 auto;
+}
+
+#classBooks-block {
+	margin: 5px auto;
+	height: 500px;
+}
+
+.book-entry {
+	border: 4px solid gold;
+	margin: 2px auto;
+	width: 90%;
+}
+
+.book-entry:hover {
+	border: 4px solid white;
+}
+
+#other-dept-courses {
+	float: left;
+	width: 49.4%;
+}
+
+#other-prof-courses {
+	float:right;
+	width:49.4%;

@@ -40,43 +40,74 @@
 	src: url('/static/fonts/Cabin-BoldItalic.ttf');
 }
 
+.heading-font {
+	font-family: 'Rambla', Sans-Serif;
+	color: gold;
+	font-weight: bold;
+}
+
+.body-font {
+	font-family: 'Cabin', Sans-Serif;
+}
+
+.bold {
+	font-weight: bold;
+}
+
 #dept-container {
 	position: relative;
 	max-width: 1000px;
 	margin: 0 auto;
-	border: 1px dotted black;
+/*	border: 1px dotted black;*/
 }
 
 #title {
-	color: gold;
-	background: purple;
-	font-family: 'Rambla', sans-serif;
-	text-align: center;
 	max-width: 1000px;
 	margin: 0 auto;
 }
 
 #class-block {
-	font-family: 'Cabin', sans-serif;;
-	background-color: #CD00E8;
-	border: 3px solid purple;
-	overflow-y: auto;
 	width: 610px;
 	height: 400px;
 	margin: 5px 5px;
 	float: left;
 }
 
-.course-number {
-	font-weight: bold;
-}
-
 #faculty-block {
-	font-family: 'Cabin', sans-serif;
-	background-color: #CD00E8;
-	border: 3px solid purple;
-	overflow-y: auto;
 	width:365px;
 	height: 400px;
 	margin-top: 5px;
+}
+
+#deptBooks-block {
+	clear: both;
+	margin: 5px;
+	margin-right: 4px;
+	height: 200px;
+}
+
+.book-entry {
+	margin: 5px;
+}
+
+.course-item a {
+	color: black;
+	text-decoration: none;
+}
+
+.course-item:hover {
+	text-decoration: underline;
+}
+
+.book-entry a {
+	color: black;
+	text-decoration: none;
+}
+
+.book-entry a:hover {
+	text-decoration: underline;
+}
+
+.bold {
+	color: black;
 }
