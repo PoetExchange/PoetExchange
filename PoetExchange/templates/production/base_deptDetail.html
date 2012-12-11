@@ -1,0 +1,47 @@
+{% extends 'production/base.html' %}
+
+{% block headext %}
+<link rel="stylesheet" type="text/css" href="/static/css/style-deptDetail.css" />
+{% endblock headext %}
+
+{% block dept_nav %}\ &nbsp; <a href='{% url academics.views.deptDetail dept.dept_abrv %}'>{{ dept.dept_abrv }}</a> &nbsp; {% block class_nav %}{% endblock %}{% endblock dept_nav %}
+{% block contentId %}content-none{% endblock contentId %}
+{% block content %}
+<div id='dept-container'>
+	<h2 id='title' class='header-skin1 heading-font'>{{ dept.dept_name }}</h2>
+	<div id="class-block" class='block-skin1 body-font'>
+		<ul id="course-list">
+			{% for course in classes %}
+			<li class="course-item">
+			<a href='{% url academics.views.classDetail course.ac_slug %}'><span class="bold">{{ course.class_dept.dept_abrv }}.{{ course.class_number }}</span>&nbsp;&nbsp;
+					<span class="item-title">{{ course.class_name }}</span></a>
+			</li>
+			{% endfor %}
+		</ul>
+	</div><!--class-block-->
+	<div id="faculty-block" class='block-skin1 body-font'>
+		<ul id="faculty-list">
+			{% for prof in dept.professor_set.all %}
+			<li>
+				{{ prof.last_name }}
+				{% if prof.first_name %}, 
+				{{ prof.first_name }}
+				{% endif %}
+			</li>
+			{% endfor %}
+		</ul>
+	</div><!--faculty-block-->
+	<div id='deptBooks-block' class='block-skin1 body-font'>
+		{% for book in books %}
+		<div class='book-entry'>
+			<span class="bold"><a href='{% url academics.views.classDetail book.book_class.ac_slug %}'>{{ book.book_class.class_dept }}.{{ book.book_class.class_number }}</a></span> <span class="item-title">{{ book.book_title }}</span><br />
+			{{ book.seller.username }}
+		</div><!--books-entry-->
+		{% endfor %}
+	</div><!--books-block-->
+</div><!--dept-container-->
+{% endblock content %}
+
+{% block widget1 %}{% endblock widget1 %}
+{% block widget2 %}{% endblock widget2 %}
+{% block widget3 %}{% endblock widget3 %}
