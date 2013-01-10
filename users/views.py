@@ -7,6 +7,7 @@ from users.functions import mainRegValidator, valCodeGenerator
 from objects.functions import whoAmI
 from django.contrib.auth import authenticate, login, logout
 from django.core.mail import EmailMessage
+from academics.models import Book
 # NOTE: All code snipets which have a comment readig **tmp** next to them are code which is present only for testing/debugging purposes, and will not remain in context during production
 
 def initRegistration(request) :
@@ -147,7 +148,7 @@ def loginRequest(request) :
 			authUser = authenticate(username=uname, password=passwd)
 			if authUser is not None :
 				login(request, authUser)
-				return HttpResponseRedirect('/admin/')
+				return HttpResponseRedirect('/')
 			else :
 				return render_to_response(
 									'login.html', 
@@ -169,3 +170,11 @@ def loginRequest(request) :
 def logoutRequest(request) :
 	logout(request)
 	return HttpResponseRedirect('/')
+
+
+def profile(request,user_id):
+	allBooks = Book.objects.filter(book_seller=SiteUser.objects.filter(user=user_id))
+		
+	return render_to_response('production/base_profile.html',
+			{'allBooks':allBooks},
+		)

@@ -19,7 +19,7 @@
 		{% block login %}
 		<div id="login">
 			{% if user.is_authenticated %}
-			<span>Welcome, {{ user.first_name }}!</span><br />
+			<span>Welcome, {{ user.username }}!</span><br />
 			<a href="{% url users.views.logoutRequest %}">Logout</a>
 			{% else %}
 			<form method="post" action="/login/">

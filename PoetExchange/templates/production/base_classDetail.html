@@ -28,7 +28,7 @@
 		<span class='bold'>Title</span> {{ book.book_title }}<br />
 		<span class='bold'>Price</span> {{ book.book_price }}<br />
 		<span class='bold'>Condition</span> {{ book.book_condition }}<br />
-		<span class='bold'>Seller</span> {{ book.book_seller.user.username }}<br />
+		<span class='bold'>Seller</span> <a href="/{{book.book_seller.user.id}}/">{{ book.book_seller.user.username }}</a><br />
 		{% if book.book_seller.residence %}
 		<span class='bold'>Location</span> {{ book.book_seller.residence }}<br />
 		{% endif %}
