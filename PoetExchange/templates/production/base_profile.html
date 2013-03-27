@@ -1,0 +1,10 @@
+{% extends 'production/base.html' %}
+
+{% block content %}
+<h1>Books this user is selling</h1>
+<u1>
+{% for a in allBooks %}
+	<li> {{a.book_class}}: {{a}} </li>
+{% endfor %}
+</u1>
+{% endblock content %}

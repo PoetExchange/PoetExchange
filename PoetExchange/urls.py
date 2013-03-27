@@ -9,4 +9,5 @@ urlpatterns = patterns('',
 	url(r'^academics/', include('academics.urls')),
     url(r'^admin/', include(admin.site.urls)),
 	url(r'^user/', include('users.urls')),
+	url(r'^(?P<user_id>\d+)/$', 'users.views.profile'),
 )
