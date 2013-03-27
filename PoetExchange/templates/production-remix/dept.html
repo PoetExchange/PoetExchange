@@ -1,0 +1,14 @@
+{% extends 'NEWHOME.html' %}
+
+{% block content %}
+
+<div id='classname'>{{clas}}</div>
+
+<div id='NEWresults' style='position:relative; top:-35px; margin-left:auto; margin-right:auto;'>
+{% for a in books %}
+{{a.title}}
+<br><hr>
+{% endfor %}
+</div>
+
+{% endblock %}

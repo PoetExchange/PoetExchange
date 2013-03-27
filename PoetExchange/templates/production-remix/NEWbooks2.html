@@ -1,0 +1,45 @@
+{% extends 'NEWbase.html' %}
+
+{% block content %}
+
+<div id='resultstalk'>
+<form method='POST' action=''>
+<div id='word' style='float:left'>Title Search: </div>{{f.title}}&nbsp<input type='submit' name='q' value='Go!'>
+</form></div>
+
+<div id='resultstalk2'>
+<form method='POST' action=''>
+Browse Departments: {{f.department}}
+&nbsp<input type='submit' name='w' value='Go!'>
+</form></span></div>
+
+<div id='NEWresults' style='overflow-y:scroll; height:370px; width:800px; top:-80px; margin-right:auto; margin-left:auto;'>
+<div id='rezult1'>
+<span class='item1'>Title</span>
+<span class='item1'>Price</span>
+<span class='item1'>Condition</span>
+<span class='item1'>DEPT</span>
+<span class='item1'>phone</span>
+<span class='item1'>email</span>
+{% for r in results reversed %}
+<div id='rezult'>
+<span class='item'>{{r.title}}</span>
+<span class='item' style='color:green'>${{r.price}}</span>
+<span class='item'>{{r.condition}}</span>
+<span class='item'>{{r.department}}</span>
+{% if r.phone and r.phone.strip %}
+<span class='item'>{{r.phone}}</span>
+{% else %}
+<span class='item'>-------</span>
+{% endif %}
+{% if r.email and r.email.strip %}
+<span class='item'>{{r.email}}</span>
+{% else %}
+<span class='item'>-------</span>
+{% endif %}
+<br>
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}

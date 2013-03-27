@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>PoetPortal</title>
+<link href='/static/main.css' media='screen' type='text/css' rel='stylesheet'>
+<link href='http://fonts.googleapis.com/css?family=Pirata+One' rel='stylesheet' type='text/css'>
+<script src='/static/scripts.js' type='text/javascript'></script>
+</head>
+<body onload='load()'>
+
+<div id='NEWtopbar'><h3><font color='white'><a href='{% url home %}'>PoetPortal</a></h3></div>
+
+<div id='NEWcontainer'>
+
+<div id='dropdown' style='z-index:2' onmouseover='stay()' onmouseout='hide()'><div id='droptext'><a href='books'>-Buy Books</a>&nbsp&nbsp<a href='sellb'>-Sell a book</a></div></div>
+<div id='navbar' onmouseover="turnpurple()" onmouseout="turnback()" style='z-index:1'>
+<a href='books'>&nbsp&nbsp&nbspUsed Books&nbsp&nbsp&nbsp</a></div>
+<div id='navbar1' onmouseover="turnpurple1()" onmouseout="turnback1()"><a href='comingsoon'>&nbsp&nbsp&nbspNew Feature Coming Soon!&nbsp&nbsp&nbsp</a></div>
+<div id='navbar2' onmouseover="turnpurple2()" onmouseout="turnback2()"  style='border-right:none'><a href='comingsoon'>&nbsp&nbsp&nbsp&nbspNew Feature Coming Soon!&nbsp&nbsp&nbsp</a></div>
+<br><br><br><br><br>
+
+{% block content %}
+
+{% endblock %}
+
+</div>
+</body>
+</html>

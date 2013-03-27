@@ -1,0 +1,19 @@
+{% extends 'NEWbase.html' %}
+
+{% block content %}
+
+<div id='NEWsell'>
+<b><a href='{% url sellb %}'><font color='white'>Sell your book</div></b></a></div>
+<div id='findbook'><b>Browse Book Listings: </b><select><option>-------</option><option>Spring 2013</option></select><select><option>-------</option><option>Business</option></select><select><option>-------</option><option>130 BSAD</option></select><select><option>-------</option><option>2128 - Decker</option></select></div>
+
+<div id='NEWresults'>
+{% for a in books %}
+<hr>
+<font color='black' size='6'>
+{{a.title}}
+{{a.cost}}
+<hr>
+{% endfor %}
+</font></div>
+
+{% endblock %}

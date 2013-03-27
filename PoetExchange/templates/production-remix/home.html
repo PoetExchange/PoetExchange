@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>Welcome!</title>
+<link href="/static/main.css" type="text/css" rel="stylesheet" media="screen">
+</head>
+<body bgcolor="#9500A8">
+
+<div id="all">
+<div id="all2">
+
+<div id="topbar"><font color="white" size="7"><div id="title"><a href='{% url home %}'>PoetExchange</a></div></font>
+<div id="login"><input field="text" size="8" value="Username"><input field="password" type="password" value="password" size="8">
+<font color="white">&nbsp<u><a href='profile'>Login</a></u></div></div>
+
+<br><br><center>
+</center>
+
+{%block content%}{%endblock%}
+
+</div>
+</div>
+</body>
+</html>

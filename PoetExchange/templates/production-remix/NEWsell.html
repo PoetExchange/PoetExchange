@@ -1,0 +1,27 @@
+{% extends 'NEWbase.html' %}
+
+{% block content %}
+
+<div id='sellform'>
+<span style='position:relative; font-family: "Pirata One", cursive; font-size:35px;'>Post your book for sale!</span>
+<hr>
+<form method='POST' action=''>
+Enter Title: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{f.title}}
+<hr>
+How's its condition?:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{f.condition}}
+<br><hr>
+How much are you asking for it?: {{f.price}}
+<br><hr>
+Phone #, for texting (optional): &nbsp&nbsp&nbsp&nbsp{{f.phone}}
+<br><hr>
+Alternate email (optional): &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{f.email}}
+<br><hr>
+Book's Department?: {{f.department}}
+<br><hr>
+<font size='4' color='black'><b><span style='text-decoration:blink; color:white;'>NOTE!!! </span><br>AIN'T NOBODY OUTSIDE WHITTIER COLLEGE can see your contact info<br><span style='color:white'>That's why we require a poet's email to register :)</span><br><span style='color:black'>Buyers will contact you at your POETS email, or the Phone/email you provide here</span></b></font>
+<br><hr>
+<input type='submit' value='Post Book' name='submit'>
+</form>
+</div>
+
+{% endblock %}

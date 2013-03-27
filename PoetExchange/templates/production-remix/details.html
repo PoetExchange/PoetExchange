@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+   <ul>
+     <li>Name: {{ item.name }}</li>
+     <li>Category: {{ item.get_category_display }}</li>
+     <li>Department: {{ item.department }}</li>
+     <li>Posted: {{ item.posted_on|date }}</li>
+   </ul>
+   <h2>Description</h2>
+     <p>{{ item.description|linebreaksbr }}</p>
+{% endblock %}

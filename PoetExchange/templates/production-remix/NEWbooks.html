@@ -1,0 +1,31 @@
+{% extends 'NEWbase.html' %}
+
+{% block content %}
+
+<div id='usedbooks'>
+Welcome to the Used Book Store!<br><br>
+<span class='title'>
+Search by Title: 
+<form method='POST' action=''>
+{{f.title}}
+<input type='submit' name='q' value='Go!'><br><br>
+</form>
+</span>
+<span class='dept'>
+Browse <br>by Department: <br>
+<form method='POST' action=''>
+{{f.department}}
+<input type='submit' name='w' value='Go!'></form>
+</span>
+<span class='or'>Or</span>
+
+<div id='ani1money'>
+<img src='http://www.veryicon.com/icon/png/Business/Financial/Money.png' width=100% height=100%></div>
+
+<div id='ani3'>
+Used Books :)</div>
+
+<div id='ani2book'>
+<img src='http://www.graphicsfuel.com/wp-content/uploads/2010/10/leather-book-preview.png' width=100% height=100%></div>
+
+{% endblock %}

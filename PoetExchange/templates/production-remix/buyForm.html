@@ -1,0 +1,26 @@
+{%extends 'home.html'%}
+
+{%block content%}
+<div id='buyform'>
+<center><h1>Buy a used Book!</h1><hr></center>
+<br>
+&nbsp&nbspSearch for a Title: <input type='text' size='8'><br>
+&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<font color='black'>Or</font><br>
+&nbsp&nbspBrowse for your class: 
+<br>&nbsp&nbsp<select><option>All</option><option>Spring 2013</option><option>Fall 2014</option></select>
+<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<select><option>-------</option><option>Business</option><option>Spanish</option></select>
+<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<select><option>-------</option><option>BSAD 130</option><option>SPAN 120</option></select>
+<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<select><option>-------</option><option>Section 2538 - Decker</option><option>Section 3872 - Aleman</option></select>
+</div>
+
+<div id='bookresults'><h1><font color='black'>
+{% for a in book %}
+<font size='5' color='purple'>{{a.title}}</font>&nbsp&nbsp&nbsp&nbsp
+<font color='green' size='3'>${{a.price}}</font><hr>
+
+<!--<font color='#CF00E6'>{{g.title}}&nbsp&nbsp<font color='green'>${{g.cost}}
+</font><hr>
+
+{%endfor%}
+</div>
+{%endblock%}

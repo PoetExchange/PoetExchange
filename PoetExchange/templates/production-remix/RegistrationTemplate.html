@@ -1,0 +1,15 @@
+<html>
+<head>
+<title>Hi!</title>
+<body bgcolor='cyan'>
+
+<form action='' method='post'>
+	{% csrf_token %}
+	<label for='firstName'>First Name:</label>{{ htmlForm.firstName }}
+	<label for='lastName'>Last Name:</label>{{ htmlForm.lastName }}
+	<label for='passwd'>Password:</label>{{ htmlForm.passwd }}
+	<label for='phoneNumber'>Phone:</label>{{ htmlForm.phoneNumber }}
+	<input type='submit' name='someName' value='Click to finish registration'>
+</form>
+</body>
+</html>

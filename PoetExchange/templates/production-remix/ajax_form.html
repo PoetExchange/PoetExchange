@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+   <title>{{ title }}</title>
+   <style>
+      #message {width:250px; background-color:#aaa;}
+      .hide {display: none;}
+   </style>
+   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+</head>
+<body>
+
+    <script type="text/javascript">
+    // prepare the form when the DOM is ready
+    $(document).ready(function() {
+        $("#add_cat").ajaxStart(function() {
+            // Remove any errors/messages and fade the form.
+            $(".form_row").removeClass('errors');
+            $(".form_row_errors").html('');
+            $("#add_cat").fadeTo('slow', 0.33);
+            $("#add_cat_btn").attr('disabled', 'disabled');
+            $("#message").addClass('hide');
+        });
+
+        // Submit the form with ajax.
+        $("#add_cat").submit(function(){
+            $.post(
+                // Grab the action url from the form.
+                "#add_cat.getAttribute('action')",
+
+                // Serialize the form data to send.
+                $("#add_cat").serialize(),
+
+                // Callback function to handle the response from view.
+                function(resp, testStatus) {
+                    if (resp.error) {
+                        // check for field errors
+                        if (resp.name_error != '') {
+                            $("#name_row").addClass('errors');
+                            $("#name_errors").html(resp.name_error);
+                        }
+                        if (resp.slug_error != '') {
+                            $("#slug_row").addClass('errors');
+                            $("#slug_errors").html(resp.slug_error);
+                        }
+                    } else {
+                        // No errors. Rewrite the category list.
+                        $("#categories").fadeTo('fast', 0);
+                        var text = new String();
+                        for(i=0; i<resp.categories.length ;i++){
+                            var m = resp.categories[i]
+                            text += "<li>" + m + "</li>"
+                        }
+                        $("#categories").html(text);
+                        $("#categories").fadeTo('slow', 1);
+                        $("#id_name").attr('value', '');
+                        $("#id_slug").attr('value', '');
+                    }
+                    // Always show the message and re-enable the form.
+                    $("#message").html(resp.message);
+                    $("#message").removeClass('hide');
+                    $("#add_cat").fadeTo('slow', 1);
+                    $("#add_cat_btn").attr('disabled', '');
+
+            // Set the Return data type to "json".
+            }, "json");
+            return false;
+        });
+
+    });
+    </script>
+
+   <h1>{{ title }}</h1>
+   <div id='message'></div>
+   <form id='add_cat' method='post' action='.'>
+       <div class='form_row' id='name_row'>
+           <p id='name_errors' class="form_row_errors">{% if form.name.errors %}{{ form.name.errors }}{% endif %}</p>
+           {{ form.name.label_tag }}{{ form.name }}
+       </div>
+       <div class='form_row' id='slug_row'>
+           <p id='slug_errors' class="form_row_errors">{% if form.slug.errors %}{{ form.slug.errors }}{% endif %}</p>
+           {{ form.slug.label_tag }}{{ form.slug }}
+       </div>
+       <input id="add_cat_btn" type='submit' value="save">
+   </form>
+
+   <h2>Categories</h2>
+   <ul id="categories">
+      {% for cat in categories %}
+      <li>{{ cat.name }}</li>
+      {% endfor %}
+   </ul>
+</body>
+</html>

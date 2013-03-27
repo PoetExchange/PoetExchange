@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Bevolist - Categories{% endblock %}
+
+{% block heading %}Categories{% endblock %}
+
+{% block content %}
+   <ul>
+       {% for cat in cats %}
+       <li><a href="{{ cat.slug }}/">{{ cat.name|capfirst }}</a></li>
+       {% endfor %}
+   </ul>
+{% endblock %}
