@@ -12,11 +12,6 @@
 	src: url('/static/fonts/OpenSans-ExtraBold.ttf');
 }
 
-.gold {
-	color: #F6FF00;
-	font-weight: bold;
-}
-
 #page-container {
 	min-width:1000px;
 	margin-top:0;
@@ -26,7 +21,7 @@
 	position: relative;
 	min-width: 1000px;
 	height: 100px;
-	margin-left:auto; 
+	margin-left:auto;
 	margin-right:auto;
 	background:purple;
 	text-align: center;
@@ -47,7 +42,7 @@
 	color:white; 
 	font-size:40px; 
 	font-family: 'Open Sans', sans-serif; 
-	font-weight:800
+	font-weight:800;
 }
 
 #tagLine {
@@ -133,6 +128,13 @@ body {
 	width: 768px;
 }
 
+.hrule-white {
+	height: 1px;
+	width: 80%;
+	background-color:white;
+	margin: 5px;
+}
+
 .widget-box {
 	text-align: center;
 	float: left;
@@ -144,6 +146,10 @@ body {
 	font-family: 'OpenSans', sans-serif;
 }
 
+.bold {
+	font-weight: bold;
+}
+
 .header-skin1 {
 	color: gold;
 	background: purple;
@@ -151,7 +157,29 @@ body {
 }
 
 .header-skin2 {
-	background-color: #8000C8
+	background-color: #8000C8;
+	text-align: left;
+	width: 100px;
+	border-right: 1px solid #CD00E8;
+	border-bottom: 1px solid #CD00E8;
+}
+
+.subheader-skin2 {
+	background-color: #a020e0;
+	width: 200px;
+	font-size: 12px;
+	border-right: 1px solid #CD00E8;
+	border-bottom: 1px solid #CD00E8;
+}
+
+.full-right {
+	float: right;
+	text-align: right;
+}
+
+.full-left {
+	float: left;
+	text-align: left;
 }
 
 .block-skin1 {

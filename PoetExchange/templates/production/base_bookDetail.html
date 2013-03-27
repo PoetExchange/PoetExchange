@@ -1,0 +1,24 @@
+{% extends 'production/base_classDetail.html' %}
+
+{% block book_nav %}\ &nbsp; <a href='{% url academics.views.bookDetail book.book_dept book.book_class book.book_slug %}'>{{ book.book_title }}</a>{% endblock book_nav %}
+
+{% block contentId %}content-main{% endblock %}
+{% block content %}
+<h2 id='bookTitle' class='heading-skin1 heading-font'>{{ book.book_title }}</h2>
+<div id='bookSellerInfo' class='full-right block-skin2 heading-font'>
+	{{ book.book_seller.user.first_name }} {{ book.book_seller.user.last_name }}<br />
+	<a href='mailto:{{ book.book_sellser.user.email }}'>
+		{{ book.book_seller.user.email }}
+	</a><br />
+	{% if book.book_seller.residence %}
+		{{ book.book_seller.residence.area }}<br />
+	{% endif %}
+</div><!--bookSellerInfo-->
+<div id='bookInfo' class='full-left block-skin2 heading-font'>
+	{{ book.get_book_condition_display }}<br />
+	${{ book.book_price }}
+</div><!--bookInfo-->
+<div id='book-description' class='block-skin2 body-font'>
+	{{ book.additional_comments }}
+</div><!--book-description-->
+{% endblock content %}

@@ -98,6 +98,8 @@ def mainRegistration(request, user_slug) :
 								username= uname,
 								password=form.cleaned_data['passwd'],
 								email=uname + '@poets.whittier.edu',
+								first_name = form.cleaned_data['fname'],
+								last_name = form.cleaned_data['lname'],
 							)
 			user.save()
 			siteUser = SiteUser.objects.create(

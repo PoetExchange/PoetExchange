@@ -3,6 +3,7 @@
 
 {% block headext %}
 <link rel="stylesheet" type="text/css" href="/static/css/style-index.css" />
+{% block headext_indexChild %}{% endblock %}
 {% endblock headext %}
 		
 {% block content %}
@@ -11,8 +12,8 @@
 		<div class="dept-block">
 			<div class="block-head"><a href="{% url academics.views.deptDetail dept.dept_abrv %}">{{ dept.dept_abrv }}</a></div><!--block-head-->
 				{% for book in  books|lookup:dept.dept_abrv %}
-				<div class="block-book">{{ book }}</div><!--block-book-->
-				<div class="hrule"></div><!--hrule-->
+				<div class="block-book"><a href='{% url academics.views.bookDetail dept.dept_abrv book.book_class.ac_slug book.book_slug %}'>{{ book }}</a></div><!--block-book-->
+				<div class="hrule-white"></div><!--hrule-->
 				{% endfor %}
 		</div><!--dept-block-->
 		{% endfor %}
@@ -21,19 +22,19 @@
 <div id="widget-container">
 {% block widget1 %}
 <div class="widget-box">
-	<span class="gold">Latest book postings!</span>
+	<span class="heading-font">Latest book postings!</span>
 </div><!--widget-box-->
 {% endblock widget1 %}
 
 {% block widget2 %}
 <div class="widget-box">
-	<span class="gold">Site news listings!</span>
+	<span class="heading-font">Site news listings!</span>
 </div><!--widget-box-->
 {% endblock widget2 %}
 
 {% block widget3 %}
 <div class="widget-box">
-	<span class="gold">Campus news!</span>
+	<span class="heading-font">Campus news!</span>
 </div><!--widget-box-->
 {% endblock widget3 %}
 </div><!--widget-container-->

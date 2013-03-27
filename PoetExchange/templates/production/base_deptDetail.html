@@ -1,8 +1,9 @@
-{% extends 'production/base.html' %}
+{% extends 'production/base_index.html' %}
 
-{% block headext %}
+{% block headext_indexChild %}
 <link rel="stylesheet" type="text/css" href="/static/css/style-deptDetail.css" />
-{% endblock headext %}
+{% block headext_deptDetailChild %}{% endblock %}
+{% endblock headext_indexChild %}
 
 {% block dept_nav %}\ &nbsp; <a href='{% url academics.views.deptDetail dept.dept_abrv %}'>{{ dept.dept_abrv }}</a> &nbsp; {% block class_nav %}{% endblock %}{% endblock dept_nav %}
 {% block contentId %}content-none{% endblock contentId %}
@@ -13,7 +14,7 @@
 		<ul id="course-list">
 			{% for course in classes %}
 			<li class="course-item">
-			<a href='{% url academics.views.classDetail course.ac_slug %}'><span class="bold">{{ course.class_dept.dept_abrv }}.{{ course.class_number }}</span>&nbsp;&nbsp;
+			<a href='{% url academics.views.classDetail dept.dept_abrv course.ac_slug %}'><span class="bold">{{ course.class_dept.dept_abrv }}.{{ course.class_number }}</span>&nbsp;&nbsp;
 					<span class="item-title">{{ course.class_name }}</span></a>
 			</li>
 			{% endfor %}
@@ -34,7 +35,7 @@
 	<div id='deptBooks-block' class='block-skin1 body-font'>
 		{% for book in books %}
 		<div class='book-entry'>
-			<span class="bold"><a href='{% url academics.views.classDetail book.book_class.ac_slug %}'>{{ book.book_class.class_dept }}.{{ book.book_class.class_number }}</a></span> <span class="item-title">{{ book.book_title }}</span><br />
+			<span class="bold"><a href='{% url academics.views.classDetail dept.dept_abrv book.book_class.ac_slug %}'>{{ book.book_class.class_dept }}.{{ book.book_class.class_number }}</a></span> <span class="item-title"><a href='{% url academics.views.bookDetail dept.dept_abrv book.book_class.ac_slug book.book_slug %}'>{{ book.book_title }}</a></span><br />
 			{{ book.seller.username }}
 		</div><!--books-entry-->
 		{% endfor %}

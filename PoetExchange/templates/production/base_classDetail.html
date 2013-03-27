@@ -1,11 +1,11 @@
 {% extends 'production/base_deptDetail.html' %}
-{% block headext %}
-<link rel='stylesheet' type='text/css' href='/static/css/style-deptDetail.css'>
+{% block headext_deptDetailChild %}
 <link rel='stylesheet' type='text/css' href='/static/css/style-classDetail.css'>
-{% endblock headext %}
+{% block headext_classDetailChild %}{% endblock %}
+{% endblock headext_deptDetailChild %}
 
 {% block class_nav %}
-\ &nbsp; <a href='{% url academics.views.classDetail class.ac_slug %}'>{{ class.class_number }}</a> &nbsp; {% block book_nav %}{% endblock %}
+\ &nbsp; <a href='{% url academics.views.classDetail class.class_dept.dept_abrv class.ac_slug %}'>{{ class.class_number }}</a> &nbsp; {% block book_nav %}{% endblock book_nav %}
 {%endblock class_nav %}
 
 {% block content %}
@@ -25,8 +25,8 @@
 	<h4 class="heading-font block-heading1">Books available for {{ class.class_dept.dept_abrv }} {{ class.class_number }}</h4>
 	{% for book in books %}
 	<div class="book-entry">
-		<span class='bold'>Title</span> {{ book.book_title }}<br />
-		<span class='bold'>Price</span> {{ book.book_price }}<br />
+		<span class='bold'>Title</span> <a href='{% url academics.views.bookDetail book.book_dept.dept_abrv book.book_class.ac_slug book.book_slug %}'>{{ book.book_title }}</a><br />
+		<span class='bold'>Price</span> ${{ book.book_price }}<br />
 		<span class='bold'>Condition</span> {{ book.book_condition }}<br />
 		<span class='bold'>Seller</span> {{ book.book_seller.user.username }}<br />
 		{% if book.book_seller.residence %}
@@ -34,12 +34,12 @@
 		{% endif %}
 	</div><!--book-entry-->
 	{% endfor %}
-</div><!--books-block-->
+</div><!--classBooks-block-->
 <div id='other-dept-courses' class='block-skin1 body-font'>
 	<h4 class='heading-font block-heading1'>Other courses in {{ class.class_dept.dept_name }} department</h4>
 	<ul>
 		{% for course in dept_courses %}
-		<li><span class='bold'>{{ course.class_dept.dept_abrv }}.{{ course.class_number }}</span> {{ course.class_name }}</li>
+		<li><span class='bold'><a href='{% url academics.views.classDetail course.class_dept.dept_abrv course.ac_slug %}'>{{ course.class_dept.dept_abrv }}.{{ course.class_number }}</a></span> {{ course.class_name }}</li>
 		{% endfor %}
 	</ul>
 </div><!--other-dept-courses-->
@@ -49,7 +49,7 @@
 	<h4 class='heading-font block-heading1'>Other courses by {% if class.class_professor.first_name %}{{ class.class_professor.first_name }} {% endif %}{{ class.class_professor.last_name }}</h4>
 	<ul>
 		{% for course in prof_courses %}
-		<li><span class='bold'>{{ course.class_dept.dept_abrv }}.{{ course.class_number }}</span> {{ course.class_name }}</li>
+		<li><span class='bold'><a href='{% url academics.views.classDetail course.class_dept.dept_abrv course.ac_slug %}'>{{ course.class_dept.dept_abrv }}.{{ course.class_number }}</a></span> {{ course.class_name }}</li>
 		{% endfor %}
 	</ul>
 	{% else %}

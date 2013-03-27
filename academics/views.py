@@ -32,8 +32,8 @@ def deptDetail(request, slug) :
 							context_instance=RequestContext(request)
 						)
 
-def classDetail(request, slug) :
-	c = get_object_or_404(AcademicClass, ac_slug=slug)
+def classDetail(request, deptSlug, classSlug) :
+	c = get_object_or_404(AcademicClass, ac_slug=classSlug)
 	b = c.book_set.all().order_by('-entry_date')
 	dept_courses = c.class_dept.academicclass_set.all().order_by('class_number')
 	context = {
@@ -49,4 +49,17 @@ def classDetail(request, slug) :
 			'production/base_classDetail.html', 
 			context, 
 			context_instance=RequestContext(request),
+			)
+
+def bookDetail(request, deptSlug, classSlug, bookSlug) :
+	b = get_object_or_404(Book, book_slug = bookSlug)
+	context = {
+			'dept':b.book_dept,
+			'class':b.book_class,
+			'book':b
+			}
+	return render_to_response(
+			'production/base_bookDetail.html', 
+			context,
+			context_instance = RequestContext(request),
 			)

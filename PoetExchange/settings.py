@@ -137,6 +137,7 @@ INSTALLED_APPS = (
     'users',
     'objects','ratings',
     'south',
+	'django_gevent_server',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

@@ -45,6 +45,16 @@
 	overflow: hidden;
 }
 
+.heading-font {
+	font-family: 'Rambla', Sans-Serif;
+	color: gold;
+	font-weight: bold;
+}
+
+.body-font {
+	font-family: 'Cabin', Sans-Serif;
+}
+
 .dept-block { 
 	font-family: 'Cabin', sans-serif;
 	font-size: 12px;
@@ -61,11 +71,12 @@
 	overflow-y: auto;
 }
 
-.dept-block a {
-	text-decoration: none;
+a {
+	color: inherit;
+	text-decoration: inherit;
 }	
 
-.dept-block a:hover {
+a:hover {
 	text-decoration: underline;
 }
 
@@ -81,20 +92,9 @@
 	width: 50px;
 }
 
-.block-head a {
-	color: gold;
-}
-
 .block-book {
 	margin: 10px 2px;
 }
-
-.hrule {
-	height: 1px;
-	width: 80%;
-	background-color: white;
-	margin: 5px;
-}	
 
 #dept-container {
 	max-width: 900px;
