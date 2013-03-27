@@ -136,4 +136,38 @@ class AcademicClassProfile(models.Model) :
 			self.unique_key = self.ac_class.pk + self.semester.pk
 			super(AcademicClassProfile, self).save(*args, **kwargs)
 		
-
+# For use during testing/debugging
+DEPTCHOICES = (
+	('ANTH', 'ANTH'),
+	('ART', 'ART'),
+	('BIOL', 'BIOL'),
+	('BSAD', 'BSAD'),
+	('CHDV', 'CHDV'),
+	('CHEM', 'CHEM'),
+	('CHIN', 'CHIN'),
+	('COSC', 'COSC'),
+	('ECON', 'ECON'),
+	('EDUC', 'EDUC'),
+	('ENGL', 'ENGL'),
+	('ENST', 'ENST'),
+	('ENVS', 'ENVS'),
+	('FILM', 'FILM'),
+	('FREN', 'FREN'),
+	('GCS', 'GCS'),
+	('GWS', 'GWS'),
+	('HIST', 'HIST'),
+	('INTD', 'INTD'),
+	('JAPN', 'JAPN'),
+	('KNS', 'KNS'),
+	('MATH', 'MATH'),
+	('MUS', 'MUS'),
+	('PHIL', 'PHIL'),
+	('PHYS', 'PHYS'),
+	('PSYC', 'PSYC'),
+	('REL', 'REL'),
+	('SOC', 'SOC'),
+	('SOWK', 'SOWK'),
+	('SPAN', 'SPAN'),
+	('THEA', 'THEA'),
+	('WSP', 'WSP'),
+)
