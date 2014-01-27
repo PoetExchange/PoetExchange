@@ -1,64 +1,42 @@
 PoetExchange
 ============
 
-All web applications associated with the PoetExchange.com website.
+This is a legacy repository for a project no longer under development. The repository remains mostly for referential purposes, and this document attempts to give a brief overview of what is present in the project.
 
---------------
-ANNOUNCEMENTS
---------------
-*11/20/12* Models are now in feature freeze. Please do not add new models, add new fields/methods to models, or add new parameters to model fields without approval from the entire development team. All development efforts should now be redirected toward the implementation of forms.
----------------------
-GENERAL DEV GUIDELINES
---------------
-These are some general guidelines which I thought would make our lives much easier when it comes to code collaboration. Feel free to add to the list if you think of more
+## About PoetExchange
 
-Comment your code!
------------------
-- We aren't the only ones readig the code we write anymore. It's nice when we can look at each other's code and understand what the hell the author is attempting to do.
-- It's going to make code maintenence 100x easier in 2, 3, 4 months when we can look at the code and actually remember why we wrote it
-- Working in Django means most of the time, we know what the code is doing based purely on what file it's in. This mostly applies to any custom written code we end up including.
-- Please include docstrings in any functions you write outside of views.py!
+PoetExchange was being written as a web application which could be leveraged by students primarily in order to exchange used books, while allowing students to build more complete user profiles detailing their semester class schedule, extracurricular activities, and exchange other general campus-relevant information.
 
-Please don't push broken code up to GitHub!
-----------------------------------------------
-- I don't care if you commit broken code to your local repository, but before you push your changes to GitHub, please make sure all the code you wrote is functioning.
-- If you aren't sure what the difference between a push and a commit is, please look it up or ask me. It is a subtle, but important distinction.
+## Functionality
 
-Please use the GitHub repository page to report issues!
----------------------------------------------------------
-- I know we meet 3 times/week, but the GitHub issues tracking is top notch stuff. Plus GitHub issues tracking is persistent. You DO want to be able to report an issue at any time on any day of the week, don't you?
-- This applies more to things like bugs and technical problems than something like troubles understanding Django. For problems understanding python or the framework, refer to the documentation, google, or me (I don't promise I'll know the answer.. but I can certainly help find it).
+Functionality which was completed before work on the application was halted is detailed in this section.
 
-We all hate to write Documentation. But we all need to do it.
----------------------------------------------------------------
-- The GitHub repository also provides a wiki section
-- We should use the wiki section to document each application we write for PoetExchange.
-- Writing documentation blows, but it's going to make our website more maintainable, especially as it expands to include more features and more applications.
+#### Full complement of DB Models
 
-If you screw up the development Database, please fix it.
---------------------------------------------------------
-- We're all sharing a sqlite database in the dev files folder.
-- When you're developing, stuff happens, and things break.
-- Don't use that as an excuse to leave them broken. 
-- Try pulling down the old (non-screwed up) database if you can; if that doesn't work, delete the screwed up database and start with a fresh one.
-- Remember to set the superuser name and password to 'admin'!
+This project includes a very feature rich set of database models, whith carfully planned relations. The models allow for the representation of a diverse array of activities and offerings on campus, and allow individual users to build profiles of themselves by declaring association with any activities or classes they may be involved with. Each user has a different profile each semester and all semesters for the user are persistently stored, so a complete running history of the user's on-campus involvement is available to recall at any time.
 
-Please don't commit static files, media files, or custom styles!
------------------------------------------------------------------------
-- Remember that everything we put on GitHub is open sourced.
-- It's all well and good if people want to use parts of our web applications, but we need to protect our branding!
-- This means try to avoid commiting things like our banner, our logo, our thumbnails, or our css styles (at least until we formally decide to license them under the creative commons :p)
-- Keep media & static files in a separate folder from the main project if you need to.
+There is also a complete model set for representing academic courses and departments, which includes information on professors. Users who post books to exchange must associate them with an academic course, which is in turn associated with a Department and a Professor. This allows for the builing of an application which can quickly find books based on things students can remember, such as the professor, course name, or department.
 
-Remember, we on the same team, yo.
--------------------------------------
-- When thinking minds come together to share ideas, disagreement is almost a given.
-- Don't let silly disagreements blow up into something crazy. Writing code is torturous enough. We don't need to give each other hell on top of that.
-- If you ever need help on a site component, feel free to lean on your fellow developers! We can brainstorm with you or help you crack problems!
-- On the other side of that, if a fellow developer is struggling, be helpful. Don't be a dick.
+The models can be viewed in the usual app-name/models.py
 
-Add guidelines!
------------------
-- We want to make sure we're all contributing to a healthy, productive working environment.
-- If you think of guidelines for the group that will make our collaboration go more smoothly, add them to this list!
-- This is a list of  guidelines. It's not the law. If one of our conventions isn't working, we'll get rid of it.
+#### User registration and authentication
+
+The user registration for PoetExchange is a 3 step process, the logic for which is implemented in users/views.py
+
+- **Initial registration**: The user enters their school username and submits it. At this point, a confirmation code is generated, associated with the username in a validator object, and the object is written to storage. Then, the user's email is automatically built from the username, the activation code is used to build a link which recalls the validator, and the link is sent out to the user's email.
+- **Email confirmaion**: The user logs into their email account and clicks the generated link. This link uses the confirmation code to recall the validator, which can then be used to confirm the vailidity of the user's email.
+- **Main Registration**: If the confirmation code recalls a valid validator object, the user's main registration form is loaded. This allows the user to fill in the remainder of their account information, (e.g., password, full name) and any other elective information (profile information such as classes, extracurriculars, etc).
+
+The authentication code is nothing unique to a Django project. This should be standard to anyone who has written authentication code in the framework.
+
+#### Browsing of Departments, Classes, and Books
+
+The browsing interface for Departments, Classes, and Books is implemented in academics/views.py
+
+This interface and its accompanying templates handle the recalling and displaying of information for the models. Each model has a "modelnameDetail" view function, which passes the data provided by the instance of the model to the template. The templates implement these views in such a way that books can looked up with the following steps:
+
+1. Find the desired Department, load the departmentDetail view
+2. Of the Classes associated with the Department, find the desired Class and load the classDetail view
+3. Of the Books associated with the Class, find the one you want and load the bookDetail view
+
+This implementats a 3-click interface, where the user is at their desired destination within 3 page loads.
